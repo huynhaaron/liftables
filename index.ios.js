@@ -16,7 +16,6 @@ export default class liftables extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Calendar />
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>

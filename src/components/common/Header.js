@@ -1,33 +1,35 @@
-import React, {Component} from 'react';
-import {AppRegistry, Text, View} from 'react-native';
 
+import React from 'react';
+import { Text, View } from 'react-native';
 
-const Header = (props)=>{
-  const {textStyle, viewStyle} = styles;
+const Header = (props) => {
+  const { textStyle, viewStyle } = styles;
+
   return (
     <View style={viewStyle}>
       <Text style={textStyle}>{props.headerText}</Text>
     </View>
-  );
+  )
 };
 
 const styles = {
   viewStyle: {
     backgroundColor: '#F8F8F8',
-    borderBottomWidth: 1,
-    borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    shadowColor: "#000",
+    height: 60,
+    paddingTop: 15,
+    shadowColor: 'black',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     elevation: 2,
     position: 'relative'
   },
   textStyle: {
-    fontSize: 25
+    fontSize: 20
   }
 };
 
-export default Header;
+
+// Make Component available to other parts of the App
+export { Header };

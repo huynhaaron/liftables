@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "firebase": "^3.9.0",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-router-flux": "^3.39.1",
+    "react-native-tabs": "^1.0.9",
     "react-native-calendar": "^0.11.0"
   },
   "devDependencies": {

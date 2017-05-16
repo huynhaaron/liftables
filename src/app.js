@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { ScrollView , Text, View } from 'react-native';
+import {Scene, Router, Actions} from 'react-native-router-flux';
+
 import firebase from 'firebase';
 import { Header, Card, CardSection, Spinner, Button } from './components/common';
 
 import UserStats from './components/user/UserStats';
 import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
+import Main from './components/Main';
 
 
 class App extends Component {
@@ -36,7 +39,9 @@ class App extends Component {
         return (
           <View>
             <ProgramIndex/>
+
             <UserStats/>
+
             <CardSection>
               <Button onPress={() => {
                 firebase.auth().signOut()
@@ -53,21 +58,24 @@ class App extends Component {
     }
   }
 
+
   render() {
     return (
-      <View>
-        <Header headerText="Liftables"/>
-        {this.renderContent()}
-      </View>
+      // <View style={{flex: 1,  justifyContent: 'center'}}>
+      //   {/* <Header headerText="Liftables"/> */}
+      //   {this.renderContent()}
+      // </View>
+      <Router>
+        <Scene key="root">
+          <Scene key="loginform" component={LoginForm} title="Liftables" initial={true} />
+          <Scene key="main" component={Main} title="Liftables" />
+          <Scene key="userstats" component={UserStats} title="Settings" />
+          <Scene key="programs" component={ProgramIndex} title="Programs" />
+        </Scene>
+      </Router>
     )
-  };
+  }
 }
 
-const styles = {
-  appStyle: {
-    backgroundColor: 'white',
-    flex: 1
-  }
-};
 
 export default App;

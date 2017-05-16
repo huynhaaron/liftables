@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import firebase from 'firebase';
-import { Header, Input, CardSection, Card, Button } from '../common';
+import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
 
 class UserStats extends Component {
-  state = {userId: '', mBench: '', mDeadlift:'', mSquat:''};
+  state = {userId: '', mBench: '', mDeadlift:'', mSquat:'', loading: true};
 
   componentDidMount() {
     let that = this;
@@ -21,8 +21,13 @@ class UserStats extends Component {
     });
   }
 
+  componentWillUpdate(prevProps, prevState) {
+    if (prevState.loading === true) {
+      setTimeout(() => {this.setState({loading: false})}, 500)
+    }
+  }
+
   handleSubmit() {
-    // debugger;
     const {userId, mBench, mDeadlift, mSquat } = this.state;
     firebase.database().ref('users/' + userId).set({
       mBench: mBench,
@@ -32,41 +37,47 @@ class UserStats extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <Spinner size="small"/>;
+    }
+
     return (
-      <Card>
-        <Header headerText="Your Max Lifts"/>
-        <CardSection>
-          <Input
-            label="Max Bench"
-            placeholder="Max Bench in lb."
-            value={`${this.state.mBench} lb`}
-            onChangeText={mBench => this.setState({mBench})}
-          />
-        </CardSection>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Card>
+          <Header headerText="Your Max Lifts"/>
+          <CardSection>
+            <Input
+              label="Max Bench"
+              placeholder="Max Bench in lb."
+              value={this.state.mBench}
+              onChangeText={mBench => this.setState({mBench})}
+            />
+          </CardSection>
 
-        <CardSection>
-          <Input
-            label="Max Deadlift"
-            placeholder="Max Deadlift in lb."
-            value={`${this.state.mDeadlift} lb`}
-            onChangeText={mDeadlift => this.setState({mDeadlift})}
-          />
-        </CardSection>
+          <CardSection>
+            <Input
+              label="Max Deadlift"
+              placeholder="Max Deadlift in lb."
+              value={this.state.mDeadlift}
+              onChangeText={mDeadlift => this.setState({mDeadlift})}
+            />
+          </CardSection>
 
-        <CardSection>
-          <Input
-            label="Max Squat"
-            placeholder="Max Squat in lb."
-            value={`${this.state.mSquat} lb`}
-            onChangeText={mSquat => this.setState({mSquat})}
-          />
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.handleSubmit.bind(this)}>
-            Save Lifts
-          </Button>
-        </CardSection>
-      </Card>
+          <CardSection>
+            <Input
+              label="Max Squat"
+              placeholder="Max Squat in lb."
+              value={this.state.mSquat}
+              onChangeText={mSquat => this.setState({mSquat})}
+            />
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.handleSubmit.bind(this)}>
+              Save Lifts
+            </Button>
+          </CardSection>
+        </Card>
+      </View>
     );
   }
 }

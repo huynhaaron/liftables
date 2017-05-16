@@ -5,7 +5,13 @@ import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
 import { Actions } from 'react-native-router-flux';
 
 class UserStats extends Component {
-  state = {userId: '', mBench: '', mDeadlift:'', mSquat:'', loading: true};
+  state = {userId: '',
+           mBench: '',
+           mDeadlift: '',
+           mSquat: '',
+           mOHP: '',
+           mRow: '',
+           loading: true};
 
   componentDidMount() {
     let that = this;
@@ -16,9 +22,15 @@ class UserStats extends Component {
 
     var info = firebase.database().ref('users/' + userId);
     info.on('value', function(snapshot) {
-      that.setState({mBench: snapshot.val().mBench});
-      that.setState({mDeadlift: snapshot.val().mDeadlift});
-      that.setState({mSquat: snapshot.val().mSquat});
+      if (snapshot.val() === null) {
+        return true;
+      } else {
+        that.setState({mBench: snapshot.val().mBench});
+        that.setState({mDeadlift: snapshot.val().mDeadlift});
+        that.setState({mSquat: snapshot.val().mSquat});
+        that.setState({mOHP: snapshot.val().mOHP});
+        that.setState({mRow: snapshot.val().mRow});
+      }
     });
   }
 
@@ -29,13 +41,13 @@ class UserStats extends Component {
   }
 
   handleSubmit() {
-    const {userId, mBench, mDeadlift, mSquat } = this.state;
+    const {userId, mBench, mDeadlift, mSquat, mOHP, mRow } = this.state;
     firebase.database().ref('users/' + userId).set({
       mBench: mBench,
       mDeadlift: mDeadlift,
-      mSquat: mSquat
-    }).then(() => {
-      Actions.main
+      mSquat: mSquat,
+      mOHP: mOHP,
+      mRow: mRow,
     })
   }
 
@@ -74,6 +86,25 @@ class UserStats extends Component {
               onChangeText={mSquat => this.setState({mSquat})}
             />
           </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max OHP"
+              placeholder="Max Overhead Press in lb."
+              value={this.state.mOHP}
+              onChangeText={mOHP => this.setState({mOHP})}
+            />
+          </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max Row"
+              placeholder="Max Row in lb."
+              value={this.state.mRow}
+              onChangeText={mRow => this.setState({mSquat})}
+            />
+          </CardSection>
+
           <CardSection>
             <Button onPress={this.handleSubmit.bind(this)}>
               Save Lifts

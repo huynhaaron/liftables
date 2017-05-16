@@ -5,10 +5,11 @@ import {Scene, Router, Actions} from 'react-native-router-flux';
 import firebase from 'firebase';
 import { Header, Card, CardSection, Spinner, Button } from './components/common';
 
+import Main from './components/Main';
 import UserStats from './components/user/UserStats';
 import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
-import Main from './components/Main';
+import ProgramDetail from './components/program/ProgramDetail';
 
 
 class App extends Component {
@@ -71,6 +72,7 @@ class App extends Component {
           <Scene key="main" component={Main} title="Liftables" />
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs" />
+          <Scene key="programdetail" component={ProgramDetail} title="Program Detail" />
         </Scene>
       </Router>
     )

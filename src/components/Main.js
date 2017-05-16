@@ -13,7 +13,7 @@ import UserStats from './user/UserStats';
 
 class Main extends Component {
 
-  state = {page:'first'};
+  state = {page:'third'};
 
   render() {
     return (

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
 import { Button, Card, CardSection, Input, Spinner } from './common';
+import { Actions } from 'react-native-router-flux';
 
 
 class LoginForm extends React.Component {
@@ -48,17 +49,17 @@ class LoginForm extends React.Component {
         <Button onPress={this.onButtonPress.bind(this)}>
           Log in
         </Button>
-        <Button onPress={this.demoLogin.bind(this)}>
+        {/* <Button onPress={this.demoLogin.bind(this).then(Actions.UserStats)}> */}
+        <Button onPress={Actions.main}>
           Demo User
         </Button>
       </CardSection>
-
     )
   }
 
   render() {
     return (
-      <Card>
+      <View style={{flex: 1, justifyContent: 'center'}}>
         <CardSection>
           <Input
             label="Email"
@@ -83,7 +84,7 @@ class LoginForm extends React.Component {
 
         {this.renderButton()}
 
-      </Card>
+      </View>
 
     );
   }

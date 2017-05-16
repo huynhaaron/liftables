@@ -6,11 +6,10 @@ import { Card, CardSection } from '../common';
 export default class ProgramIndex extends React.Component {
   render() {
     return (
-      <View>
+      <View style={{flex: 1, justifyContent: 'center'}}>
         <Card>
           <CardSection>
             <Text> Jim Wendler's 5-3-1</Text>
-            
           </CardSection>
         </Card>
 

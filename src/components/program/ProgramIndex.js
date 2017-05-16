@@ -35,10 +35,10 @@ export default class ProgramIndex extends React.Component {
         </View>
 
         <View style={styles.cardStyle}>
-          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494959835/Liftables/dumbbell.png'}}/>
+          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494962261/Liftables/skull.png'}}/>
           <View style={styles.textStyle}>
-            <Text style={styles.titleStyle}>Starting Strength</Text>
-            <Text style={styles.descriptionStyle} numberOfLines={6}>The goal of this program is to add weight each and every time you lift, taking advantage of The Novice Effect that allows you to do so. Perform the program on a 3 day per week schedule, on non-consecutive days, i.e. Mon/Wed/Fri, Tues/Thurs/Sat or similar.</Text>
+            <Text style={styles.titleStyle}>Greyskull LP </Text>
+            <Text style={styles.descriptionStyle} numberOfLines={6}>A simple beginner's linear progression program. Phrak's variant is a commonly used implementation. A 3 day or A/B routine.</Text>
           </View>
         </View>
 

@@ -10,7 +10,7 @@ import UserStats from './components/user/UserStats';
 import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
 import ProgramDetail from './components/program/ProgramDetail';
-
+import ProgramShow from './components/program/ProgramShow';
 
 class App extends Component {
   state = { loggedIn: null };
@@ -73,6 +73,7 @@ class App extends Component {
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs" />
           <Scene key="programdetail" component={ProgramDetail} title="Program Detail" />
+          <Scene key="programshow" component={ProgramShow} title="Program Show" />
         </Scene>
       </Router>
     )

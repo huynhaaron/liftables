@@ -31,7 +31,7 @@ class UserStats extends Component {
         that.setState({mOHP: snapshot.val().mOHP});
         that.setState({mRow: snapshot.val().mRow});
       }
-    });
+    })
   }
 
   componentWillUpdate(prevProps, prevState) {
@@ -101,7 +101,7 @@ class UserStats extends Component {
               label="Max Row"
               placeholder="Max Row in lb."
               value={this.state.mRow}
-              onChangeText={mRow => this.setState({mSquat})}
+              onChangeText={mRow => this.setState({mRow})}
             />
           </CardSection>
 

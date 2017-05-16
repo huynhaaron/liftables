@@ -1,66 +1,99 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Image, Text, ScrollView, View } from 'react-native';
 import firebase from 'firebase';
-import { Card, ProgramCard } from '../common';
+import { Card, CardSection } from '../common';
+import ProgramDetail from './ProgramDetail';
+import { Actions } from 'react-native-router-flux';
 
 export default class ProgramIndex extends React.Component {
+
   render() {
     return (
       <ScrollView style={{flex: 1, paddingVertical: 60 }}>
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> Jim Wendler's 5-3-1</Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+          <View style={styles.cardStyle}>
+            <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/barbell-bench-press.png'}}/>
+            <View style={styles.textStyle}>
+              <Text style={styles.titleStyle}>Jim Wendler's 5-3-1</Text>
+              <Text style={styles.descriptionStyle} numberOfLines={6}>Essentially, Jim Wendler’s 5/3/1 Method is a simple, effective and flexible routine for getting stronger which you can employ indefinitely and tailor to individual goals. It is build around the central tenets of strength training: Compound lifts, constant progress, and smashing PRs. The 5/3/1 routine itself is built around a monthly mesocycle which comprises four distinct microcycles.</Text>
+            </View>
+          </View>
 
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> Starting Strength </Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+          <View style={styles.cardStyle}>
+            <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494959835/Liftables/dumbbell.png'}}/>
+            <View style={styles.textStyle}>
+              <Text style={styles.titleStyle}>Starting Strength</Text>
+              <Text style={styles.descriptionStyle} numberOfLines={6}>The goal of this program is to add weight each and every time you lift, taking advantage of The Novice Effect that allows you to do so. Perform the program on a 3 day per week schedule, on non-consecutive days, i.e. Mon/Wed/Fri, Tues/Thurs/Sat or similar.</Text>
+            </View>
+          </View>
 
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> IceCream Fitness </Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+        <View style={styles.cardStyle}>
+          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
+          <View style={styles.textStyle}>
+            <Text style={styles.titleStyle}>IceCream Fitness</Text>
+            <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
+          </View>
+        </View>
 
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> Lorem Ipsum </Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+        <View style={styles.cardStyle}>
+          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494959835/Liftables/dumbbell.png'}}/>
+          <View style={styles.textStyle}>
+            <Text style={styles.titleStyle}>Starting Strength</Text>
+            <Text style={styles.descriptionStyle} numberOfLines={6}>The goal of this program is to add weight each and every time you lift, taking advantage of The Novice Effect that allows you to do so. Perform the program on a 3 day per week schedule, on non-consecutive days, i.e. Mon/Wed/Fri, Tues/Thurs/Sat or similar.</Text>
+          </View>
+        </View>
 
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> Lorem Ipsum </Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+        <View style={styles.cardStyle}>
+          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
+          <View style={styles.textStyle}>
+            <Text style={styles.titleStyle}>IceCream Fitness</Text>
+            <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
+          </View>
+        </View>
 
-        <Card>
-          <ProgramCard>
-            <Text style={styles.titleStyle}> Lorem Ipsum </Text>
-            <Text style={styles.descriptionStyle} numberOfLines={5}> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </ProgramCard>
-        </Card>
+        <View style={styles.cardStyle}>
+          <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
+          <View style={styles.textStyle}>
+            <Text style={styles.titleStyle}>IceCream Fitness</Text>
+            <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
+          </View>
+        </View>
+
+        {/* Needed to allow screen to scroll all the way down */}
+        <View style={styles.blankStyle} />
+
       </ScrollView>
     );
   }
 }
 
 const styles = {
+  cardStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 15,
+    marginBottom: 15
+  },
   titleStyle: {
     fontSize: 18,
-    textAlignVertical: 'center',
     fontWeight: 'bold'
   },
   descriptionStyle: {
     fontSize: 12,
-    textAlignVertical: 'center',
+    width: 250,
+    marginTop: 5
+  },
+  imageStyle: {
+    width: 80,
+    height: 80,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  textStyle: {
+    flexDirection: 'column',
+    marginRight: 10
+  },
+  blankStyle: {
+    height: 120
   }
 }

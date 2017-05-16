@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
 import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
+import { Actions } from 'react-native-router-flux';
 
 class UserStats extends Component {
   state = {userId: '', mBench: '', mDeadlift:'', mSquat:'', loading: true};
@@ -33,6 +34,8 @@ class UserStats extends Component {
       mBench: mBench,
       mDeadlift: mDeadlift,
       mSquat: mSquat
+    }).then(() => {
+      Actions.main
     })
   }
 

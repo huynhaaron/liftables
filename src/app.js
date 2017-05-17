@@ -34,30 +34,30 @@ class App extends Component {
     });
   }
 
-  renderContent() {
-    switch (this.state.loggedIn) {
-      case true:
-        return (
-          <View>
-            <ProgramIndex/>
-
-            <UserStats/>
-
-            <CardSection>
-              <Button onPress={() => {
-                firebase.auth().signOut()
-              }}>
-                Log Out
-              </Button>
-            </CardSection>
-          </View>
-        )
-      case false:
-        return <LoginForm />;
-      default:
-      return <Spinner size="large" />
-    }
-  }
+  // renderContent() {
+  //   switch (this.state.loggedIn) {
+  //     case true:
+  //       return (
+  //         <View>
+  //           <ProgramIndex/>
+  //
+  //           <UserStats/>
+  //
+  //           <CardSection>
+  //             <Button onPress={() => {
+  //               firebase.auth().signOut()
+  //             }}>
+  //               Log Out
+  //             </Button>
+  //           </CardSection>
+  //         </View>
+  //       )
+  //     case false:
+  //       return <LoginForm />;
+  //     default:
+  //     return <Spinner size="large" />
+  //   }
+  // }
 
 
   render() {
@@ -72,7 +72,6 @@ class App extends Component {
           <Scene key="main" component={Main} title="Liftables" />
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs" />
-          <Scene key="programdetail" component={ProgramDetail} title="Program Detail" />
           <Scene key="programshow" component={ProgramShow} title="Program Show" />
         </Scene>
       </Router>

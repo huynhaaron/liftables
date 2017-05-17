@@ -9,6 +9,7 @@ import Tabs from 'react-native-tabs';
 
 
 import ProgramIndex from './program/ProgramIndex';
+import ProgramShow from './program/ProgramShow';
 import UserStats from './user/UserStats';
 
 class Main extends Component {
@@ -27,7 +28,7 @@ class Main extends Component {
           <Text name="first" onPress={Actions.main} >Main</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
           <Text name="third" onPress={Actions.programs} > Programs</Text>
-          <Text name="fourth">Calendar</Text>
+          <Text name="fourth" onPress={Actions.programshow} >Calendar</Text>
           <Text name="fifth">Settings</Text>
         </Tabs>
 

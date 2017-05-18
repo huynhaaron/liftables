@@ -14,48 +14,49 @@ class LoginForm extends React.Component {
     this.setState({ error: '', loading: true});
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then( this.onLoginSuccess.bind(this))
+      .then( ()=>{
+        Actions.root();
+        this.onLoginSuccess();
+      })
       .catch(()=> {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then( this.onLoginSuccess.bind(this))
+          .then(()=>{
+            Actions.root();
+            this.onLoginSuccess();
+          })
           .catch( this.onLoginFail.bind(this));
       });
   }
 
   demoLogin() {
+    this.setState({ error: '', loading: true});
     firebase.auth().signInWithEmailAndPassword('Test123@test.com', 'password')
-      .then( this.onLoginSuccess.bind(this));
+      .then( ()=>{
+        Actions.root();
+        this.onLoginSuccess();
+      });
   }
 
   onLoginFail() {
     this.setState({error: 'Authentication Failed', loading: false});
   }
 
-  onLoginSuccess() {
-    this.setState({
-      email: '',
-      password: '',
-      loading: false,
-      error: ''
-    });
+  onLoginSuccess(){
+    this.setState({email: '', password: '', error: '', loading: false});
   }
+
 
   renderButton() {
     if (this.state.loading) {
-      return <Spinner size="small"/>;
+      return <Spinner />;
     }
     return (
-      <CardSection>
-        <Button onPress={this.onButtonPress.bind(this)}>
-          Log in
-        </Button>
-        {/* <Button onPress={this.demoLogin.bind(this).then(Actions.UserStats)}> */}
-        <Button onPress={Actions.main}>
-          Demo User
-        </Button>
-      </CardSection>
+      <Text style={styles.errorTextStyle}>
+        {this.state.error}
+      </Text>
     )
   }
+
 
   render() {
     return (
@@ -78,11 +79,18 @@ class LoginForm extends React.Component {
             onChangeText={password => this.setState({password})}
           />
         </CardSection>
-        <Text style={styles.errorTextStyle}>
-          {this.state.error}
-        </Text>
+
 
         {this.renderButton()}
+
+        <CardSection>
+          <Button onPress={this.onButtonPress.bind(this)}>
+            Log in
+          </Button>
+          <Button onPress={this.demoLogin.bind(this)}>
+            Demo User
+          </Button>
+        </CardSection>
 
       </View>
 

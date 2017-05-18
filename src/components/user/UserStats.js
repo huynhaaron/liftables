@@ -20,7 +20,7 @@ class UserStats extends Component {
     that.setState({userId});
 
     var info = firebase.database().ref('users/' + userId);
-    info.on('value', function(snapshot) {
+    info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {

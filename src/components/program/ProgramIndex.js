@@ -9,7 +9,7 @@ export default class ProgramIndex extends React.Component {
   render() {
     return (
       <ScrollView style={{flex: 1, paddingVertical: 60 }}>
-          <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow} >
+          <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "Jim Wendler's 5-3-1"})} >
             <Image style={styles.imageStyle}  source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/barbell-bench-press.png'}}/>
             <View style={styles.textStyle}>
               <Text style={styles.titleStyle} >Jim Wendler's 5-3-1</Text>
@@ -17,7 +17,7 @@ export default class ProgramIndex extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow}>
+          <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "Starting Strength"})} >
             <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494959835/Liftables/dumbbell.png'}}/>
             <View style={styles.textStyle}>
               <Text style={styles.titleStyle}>Starting Strength</Text>
@@ -25,7 +25,7 @@ export default class ProgramIndex extends React.Component {
             </View>
           </TouchableOpacity>
 
-        <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow}>
+        <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "IceCream Fitness"})}>
           <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
           <View style={styles.textStyle}>
             <Text style={styles.titleStyle}>IceCream Fitness</Text>
@@ -33,15 +33,15 @@ export default class ProgramIndex extends React.Component {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow}>
+        <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "Greyskull LP"})}>
           <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494962261/Liftables/skull.png'}}/>
           <View style={styles.textStyle}>
-            <Text style={styles.titleStyle}>Greyskull LP </Text>
+            <Text style={styles.titleStyle}>Greyskull LP</Text>
             <Text style={styles.descriptionStyle} numberOfLines={6}>A simple beginner's linear progression program. Phrak's variant is a commonly used implementation. A 3 day or A/B routine.</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow}>
+        <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "IceCream Fitness"})}>
           <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
           <View style={styles.textStyle}>
             <Text style={styles.titleStyle}>IceCream Fitness</Text>

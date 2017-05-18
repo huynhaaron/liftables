@@ -14,7 +14,7 @@ import UserStats from './user/UserStats';
 
 class Main extends Component {
 
-  state = {page:'third'};
+  state =  {page:'third'};
 
   render() {
     return (
@@ -28,7 +28,7 @@ class Main extends Component {
           <Text name="first" onPress={Actions.main} >Main</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
           <Text name="third" onPress={Actions.programs} > Programs</Text>
-          <Text name="fourth" onPress={Actions.programshow} >Calendar</Text>
+          <Text name="fourth" onPress={Actions.calendar} >Calendar</Text>
           <Text name="fifth">Settings</Text>
         </Tabs>
 

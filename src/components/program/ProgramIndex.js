@@ -9,7 +9,7 @@ export default class ProgramIndex extends React.Component {
   render() {
     return (
       <ScrollView style={{flex: 1, paddingVertical: 60 }}>
-          <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow} >
+          <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow({name: "Jim Wendler's 5-3-1"})} >
             <Image style={styles.imageStyle}  source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/barbell-bench-press.png'}}/>
             <View style={styles.textStyle}>
               <Text style={styles.titleStyle} >Jim Wendler's 5-3-1</Text>

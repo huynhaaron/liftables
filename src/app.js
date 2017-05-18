@@ -50,7 +50,7 @@ class App extends Component {
           <Scene key="main" component={Main} title="Liftables" />
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs" />
-          <Scene key="programshow" component={ProgramShow} title="Program Show" />
+          <Scene key="programshow" component={ProgramShow} modal={true} title="Program Show" />
         </Scene>
       </Router>
     )

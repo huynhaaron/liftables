@@ -34,41 +34,19 @@ class App extends Component {
     });
   }
 
-  // renderContent() {
-  //   switch (this.state.loggedIn) {
-  //     case true:
-  //       return (
-  //         <View>
-  //           <ProgramIndex/>
-  //
-  //           <UserStats/>
-  //
-  //           <CardSection>
-  //             <Button onPress={() => {
-  //               firebase.auth().signOut()
-  //             }}>
-  //               Log Out
-  //             </Button>
-  //           </CardSection>
-  //         </View>
-  //       )
-  //     case false:
-  //       return <LoginForm />;
-  //     default:
-  //     return <Spinner size="large" />
-  //   }
-  // }
-
+  logout(){
+    firebase.auth().signOut()
+      .then(()=>{
+        Actions.auth({type:'reset'})});
+  }
 
   render() {
     return (
-      // <View style={{flex: 1,  justifyContent: 'center'}}>
-      //   {/* <Header headerText="Liftables"/> */}
-      //   {this.renderContent()}
-      // </View>
       <Router>
-        <Scene key="root">
+        <Scene key="auth">
           <Scene key="loginform" component={LoginForm} title="Liftables" initial={true} />
+        </Scene>
+        <Scene key="root" rightTitle="Logout" onRight={this.logout.bind(this)}>
           <Scene key="main" component={Main} title="Liftables" />
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs" />

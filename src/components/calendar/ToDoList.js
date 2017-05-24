@@ -26,9 +26,10 @@ class ToDoList extends Component {
   }
 
   render(){
+    console.log(this.props.workoutData);
     return (
       <View style={styles.agendaStyle}>
-          <Text style={styles.title}>To Do List</Text>
+          <Text style={styles.title}>To Do List {this.props.workoutData}</Text>
           <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderListItem.bind(this)}

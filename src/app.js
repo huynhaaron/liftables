@@ -11,7 +11,7 @@ import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
 import ProgramDetail from './components/program/ProgramDetail';
 import ProgramShow from './components/program/ProgramShow';
-import Calendar from './components/Calendar';
+import MyCalendar from './components/calendar/MyCalendar';
 
 class App extends Component {
   state = { loggedIn: null };
@@ -52,7 +52,7 @@ class App extends Component {
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs"/>
           <Scene key="programshow" component={ProgramShow} title="Program Show" />
-          <Scene key="calendar" component={Calendar} title="Calendar" />
+          <Scene key="calendar" component={MyCalendar} title="Calendar" />
         </Scene>
       </Router>
     )

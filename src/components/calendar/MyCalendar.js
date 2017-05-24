@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import ToDoList from './ToDoList';
 
 export default class MyCalendar extends Component {
   constructor(props){
@@ -9,28 +10,23 @@ export default class MyCalendar extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Calendar style={styles.calendar} />
-      </ScrollView>
+      <View style={styles.containerStyle}>
+        <Calendar style={styles.calendarStyle} />
+        <ToDoList />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  calendar: {
+  calendarStyle: {
     borderTopWidth: 1,
-    paddingTop: 100,
+    paddingTop: 65,
     borderBottomWidth: 1,
     borderColor: '#eee',
-    height: 350
   },
-  text: {
-    textAlign: 'center',
-    borderColor: '#bbb',
-    padding: 10,
-    backgroundColor: '#eee'
-  },
-  container: {
+  containerStyle: {
     flex: 1,
+
   }
 });

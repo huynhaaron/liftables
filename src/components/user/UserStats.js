@@ -14,21 +14,21 @@ class UserStats extends Component {
 
   componentDidMount() {
     let that = this;
-    var database = firebase.database();
+    let database = firebase.database();
 
-    var userId = firebase.auth().currentUser.uid;
+    let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
 
-    var info = firebase.database().ref('users/' + userId);
+    let info = firebase.database().ref('users/' + userId);
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().mBench});
-        that.setState({mDeadlift: snapshot.val().mDeadlift});
-        that.setState({mSquat: snapshot.val().mSquat});
-        that.setState({mOHP: snapshot.val().mOHP});
-        that.setState({mRow: snapshot.val().mRow});
+        that.setState({mBench: snapshot.val().stats.mBench});
+        that.setState({mDeadlift: snapshot.val().stats.mDeadlift});
+        that.setState({mSquat: snapshot.val().stats.mSquat});
+        that.setState({mOHP: snapshot.val().stats.mOHP});
+        that.setState({mRow: snapshot.val().stats.mRow});
       }
     })
   }
@@ -42,11 +42,12 @@ class UserStats extends Component {
   handleSubmit() {
     const {userId, mBench, mDeadlift, mSquat, mOHP, mRow } = this.state;
     firebase.database().ref('users/' + userId).set({
+      Stats: {
       mBench: mBench,
       mDeadlift: mDeadlift,
       mSquat: mSquat,
       mOHP: mOHP,
-      mRow: mRow,
+      mRow: mRow}
     })
   }
 

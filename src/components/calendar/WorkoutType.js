@@ -12,14 +12,32 @@ class WorkoutType extends Component {
     this.checked = [];
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: ['5 reps of 80lbs', '8 reps of 40 lbs'],
+      data: [],
       dataSource: ds,
     };
   }
 
   componentWillMount(){
     //need to make ajax request to firebase here to get data.
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.data)});
+    const {sets, weight} = this.props;
+    if (sets === undefined) return;
+    let newData = [];
+    for (let i = 0; i < sets.length; i++) {
+      newData.push(`${sets[i]} reps of ${weight[i]}lbs`);
+    }
+
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(newData)});
+  }
+
+  componentWillReceiveProps(nextProps){
+    const {sets, weight} = nextProps;
+    let newData = [];
+
+    for (let i = 0; i < sets.length; i++) {
+      newData.push(`${sets[i]} reps of ${weight[i]}lbs`);
+    }
+
+    this.setState({data: newData, dataSource: this.state.dataSource.cloneWithRows(newData)});
   }
 
   checkItems(rowData){

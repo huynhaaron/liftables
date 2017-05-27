@@ -7,7 +7,7 @@ import firebase from 'firebase';
 export default class MyCalendar extends Component {
   constructor(props){
     super(props);
-    this.state = { calendar: [], workout: ''};
+    this.state = { calendar: [], workout: [], date: ''};
     this.database = firebase.database();
     this.userId = firebase.auth().currentUser.uid;
   }
@@ -15,6 +15,14 @@ export default class MyCalendar extends Component {
   componentWillMount() {
     let that = this;
     let info = firebase.database().ref('users/' + this.userId);
+
+    let todaysDate = new Date();
+    let year = todaysDate.getYear() + 1900;
+    let month = todaysDate.getMonth() + 1;
+    let day = todaysDate.getDate();
+
+    this.renderWorkout({year, month, day});
+
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
@@ -25,6 +33,7 @@ export default class MyCalendar extends Component {
   }
 
   renderWorkout(date){
+
     const {year, month, day} = date;
     let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
 
@@ -34,11 +43,11 @@ export default class MyCalendar extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        console.log(dateKey);
-        console.log(snapshot.val().calendar[`${dateKey}`]);
-        that.setState({ workout: snapshot.val().calendar[`${dateKey}`]});
+        that.setState({ workout: snapshot.val().calendar[`${dateKey}`],
+                        date: dateKey});
       }
     });
+
   }
 
   formatDate(date) {
@@ -64,7 +73,7 @@ export default class MyCalendar extends Component {
           selected = {['2017-05-23', Date()]}
           onDayPress={(day)=> this.renderWorkout(day)}
           />
-        <ToDoList workoutData={this.state.workout}/>
+        <ToDoList plan={this.state.workout} date={this.state.date}/>
       </View>
     );
   }

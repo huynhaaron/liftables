@@ -7,32 +7,66 @@ class ToDoList extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: ['bench incline', 'deadlifts'],
+      workoutData: [],
       dataSource: ds,
+      date: ''
     };
   }
 
   componentWillMount(){
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.data)});
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.workoutData)});
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (!nextProps.plan || nextProps.plan.length ===0 ) {
+      if(nextProps.date.length > 0) {
+        this.setState({workoutData: [],
+                       dataSource: this.state.dataSource.cloneWithRows([]),
+                       date: nextProps.date});
+      }
+      return;
+    }
+    let entireWorkoutInfo = nextProps.plan.workout;
+    let workoutTypes = Object.keys(entireWorkoutInfo);
+    let refactoredWorkoutData = [];
+    for (let i = 0; i < workoutTypes.length; i++) {
+       let type = workoutTypes[i];
+       let setWeightData = entireWorkoutInfo[type];
+       refactoredWorkoutData.push({[type]: setWeightData});
+    }
+
+    this.setState({workoutData: refactoredWorkoutData,
+                   dataSource: this.state.dataSource.cloneWithRows(refactoredWorkoutData),
+                   date: nextProps.date});
+
   }
 
   renderListItem(rowData){
+    if (this.state.workoutData.length==0) {
+      return <View>
+
+      </View>;
+    }
+    let type = Object.keys(rowData)[0];
+    let exercises = rowData[type];
+    const {sets, weight} = exercises;
+
     return (
       <View>
-        <Text>Exercise: {rowData}</Text>
-        <WorkoutType />
+        <Text>Exercise: {type}</Text>
+        <WorkoutType type={type} sets={sets} weight={weight}/>
       </View>
     );
   }
 
   render(){
-    console.log(this.props.workoutData);
     return (
       <View style={styles.agendaStyle}>
-          <Text style={styles.title}>To Do List {this.props.workoutData}</Text>
+          <Text style={styles.title}>To Do List {this.state.date}</Text>
           <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderListItem.bind(this)}
+          enableEmptySections
           />
       </View>
     );

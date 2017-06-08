@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
-
+import moment from 'moment';
 
 import ProgramIndex from './program/ProgramIndex';
 import ProgramShow from './program/ProgramShow';

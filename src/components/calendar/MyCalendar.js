@@ -14,20 +14,12 @@ export default class MyCalendar extends Component {
 
   componentWillMount() {
     let that = this;
-    let info = firebase.database().ref('users/' + this.userId);
-
-    let todaysDate = new Date();
-    let year = todaysDate.getYear() + 1900;
-    let month = todaysDate.getMonth() + 1;
-    let day = todaysDate.getDate();
-
-    this.renderWorkout({year, month, day});
-
+    let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({ calendar: Object.keys(snapshot.val().calendar)});
+        that.setState({ calendar: Object.keys(snapshot.val())}, ()=>{debugger});
       }
     });
   }
@@ -38,15 +30,13 @@ export default class MyCalendar extends Component {
     let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
 
     let that = this;
-    let info = firebase.database().ref('users/' + this.userId);
-    info.once('value', function(snapshot) {
-      if (snapshot.val() === null) {
-        return true;
-      } else {
-        that.setState({ workout: snapshot.val().calendar[`${dateKey}`],
-                        date: dateKey});
-      }
-    });
+    // let info = firebase.database().ref('users/' + this.userId);
+    // info.once('value', function(snapshot) {
+    //   if (snapshot.val() === null) {
+    //     return true;
+    //   } else {
+      this.setState({date: dateKey});
+
 
   }
 
@@ -57,9 +47,9 @@ export default class MyCalendar extends Component {
     return date;
   }
 
+
   render() {
     let markedDate = {};
-
     this.state.calendar.forEach(date => {
       markedDate[date] = [{startingDay: true, color: 'yellow'},
         {endingDay: true, color: 'yellow'}];

@@ -18,6 +18,7 @@ class ToDoList extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+
     if (!nextProps.plan || nextProps.plan.length ===0 ) {
       if(nextProps.date.length > 0) {
         this.setState({workoutData: [],
@@ -26,7 +27,8 @@ class ToDoList extends Component {
       }
       return;
     }
-    let entireWorkoutInfo = nextProps.plan.workout;
+    let entireWorkoutInfo = nextProps.plan;
+
     let workoutTypes = Object.keys(entireWorkoutInfo);
     let refactoredWorkoutData = [];
     for (let i = 0; i < workoutTypes.length; i++) {
@@ -47,19 +49,20 @@ class ToDoList extends Component {
 
       </View>;
     }
+    
     let type = Object.keys(rowData)[0];
     let exercises = rowData[type];
-    const {sets, weight} = exercises;
 
     return (
       <View>
         <Text>Exercise: {type}</Text>
-        <WorkoutType type={type} sets={sets} weight={weight}/>
+        <WorkoutType type={type} exercises={exercises}/>
       </View>
     );
   }
 
   render(){
+
     return (
       <View style={styles.agendaStyle}>
           <Text style={styles.title}>To Do List {this.state.date}</Text>

@@ -7,7 +7,12 @@ import firebase from 'firebase';
 export default class MyCalendar extends Component {
   constructor(props){
     super(props);
-    this.state = { calendar: [], workout: [], date: ''};
+    this.month = '';
+    this.day = '';
+    this.year = '';
+    this.todaysDate();
+    let dateKey = `${this.year}-${this.formatDate(this.month)}-${this.formatDate(this.day)}`;
+    this.state = { calendar: [], workout: [], date: `${dateKey}`};
     this.database = firebase.database();
     this.userId = firebase.auth().currentUser.uid;
   }
@@ -19,9 +24,14 @@ export default class MyCalendar extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({ calendar: Object.keys(snapshot.val())}, ()=>{debugger});
+        that.setState({ calendar: Object.keys(snapshot.val())});
       }
     });
+  }
+
+  componentDidMount(){
+    let dateParam = {year: this.year, month: this.month, day: this.day};
+    this.renderWorkout(dateParam);
   }
 
   renderWorkout(date){
@@ -30,12 +40,14 @@ export default class MyCalendar extends Component {
     let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
 
     let that = this;
-    // let info = firebase.database().ref('users/' + this.userId);
-    // info.once('value', function(snapshot) {
-    //   if (snapshot.val() === null) {
-    //     return true;
-    //   } else {
-      this.setState({date: dateKey});
+     let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
+     info.once('value', function(snapshot) {
+        if (snapshot.val() === null) {
+          return true;
+        } else {
+ +        that.setState({ workout: snapshot.val()[dateKey], date: dateKey});
+        }
+      });
 
 
   }
@@ -47,6 +59,12 @@ export default class MyCalendar extends Component {
     return date;
   }
 
+  todaysDate(){
+    let today = new Date();
+    this.month = today.getMonth()+1;
+    this.day = today.getDate();
+    this.year = today.getYear() + 1900;
+  }
 
   render() {
     let markedDate = {};
@@ -60,7 +78,7 @@ export default class MyCalendar extends Component {
         <Calendar style={styles.calendarStyle}
           markedDates = { markedDate }
           markingType = {'interactive'}
-          selected = {['2017-05-23', Date()]}
+          selected = {[this.state.date, Date()]}
           onDayPress={(day)=> this.renderWorkout(day)}
           />
         <ToDoList plan={this.state.workout} date={this.state.date}/>

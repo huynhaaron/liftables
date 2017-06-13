@@ -19,7 +19,7 @@ export default class MyCalendar extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({ calendar: Object.keys(snapshot.val())}, ()=>{debugger});
+        that.setState({ calendar: Object.keys(snapshot.val())});
       }
     });
   }
@@ -30,12 +30,14 @@ export default class MyCalendar extends Component {
     let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
 
     let that = this;
-    // let info = firebase.database().ref('users/' + this.userId);
-    // info.once('value', function(snapshot) {
-    //   if (snapshot.val() === null) {
-    //     return true;
-    //   } else {
-      this.setState({date: dateKey});
+     let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
+     info.once('value', function(snapshot) {
+        if (snapshot.val() === null) {
+          return true;
+        } else {
+ +        that.setState({ workout: snapshot.val()[dateKey], date: dateKey});
+        }
+      });
 
 
   }

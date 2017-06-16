@@ -18,25 +18,14 @@ class WorkoutType extends Component {
   }
 
   componentWillMount(){
-    //need to make ajax request to firebase here to get data.
-    const {sets, weight} = this.props;
-    if (sets === undefined) return;
-    let newData = [];
-    for (let i = 0; i < sets.length; i++) {
-      newData.push(`${sets[i]} reps of ${weight[i]}lbs`);
-    }
+    let newData = this.props.exercises; //if undefined, skip.
+    if(!newData) return;
 
     this.setState({dataSource: this.state.dataSource.cloneWithRows(newData)});
   }
 
   componentWillReceiveProps(nextProps){
-    const {sets, weight} = nextProps;
-    let newData = [];
-
-    for (let i = 0; i < sets.length; i++) {
-      newData.push(`${sets[i]} reps of ${weight[i]}lbs`);
-    }
-
+    let newData = nextProps.exercises;
     this.setState({data: newData, dataSource: this.state.dataSource.cloneWithRows(newData)});
   }
 

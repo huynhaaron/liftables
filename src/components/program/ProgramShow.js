@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View, Alert } from 'react-native';
 import firebase from 'firebase';
 import { Card, CardSection, ProgramCard, Button, Spinner } from '../common';
 import moment from 'moment';
@@ -40,9 +40,9 @@ class ProgramShow extends React.Component {
 
 
     //get user stats
-    var userId = firebase.auth().currentUser.uid;
+    let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
-    var stats = firebase.database().ref('users/' + userId);
+    let stats = firebase.database().ref('users/' + userId);
     stats.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
@@ -89,12 +89,34 @@ class ProgramShow extends React.Component {
         setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
       }
     })
-    window.moment = moment;
-    // moment().add(1, 'days').format;
-    firebase.database().ref('users/' + userId + '/calendars').set({
-      schedule
+
+    let calendar = firebase.database().ref('users/' + userId + '/calendars');
+    calendar.once('value', function(snapshot) {
+      if (snapshot.val() === null) {
+        // console.log("nothing in the calendar")
+        // console.log("writing workout to the database...")
+        firebase.database().ref('users/' + userId + '/calendars').set({
+          schedule
+        });
+        Actions.calendar();
+      } else {
+        // console.log("something in the calendar")
+        Alert.alert(
+              'ERROR',
+              'You already have a workout in progress',
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: true }
+        )
+      }
     });
-    Actions.calendar();
+
+
+    // firebase.database().ref('users/' + userId + '/calendars').set({
+    //   schedule
+    // });
+    // Actions.calendar();
   }
 
   // handleSubmit() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
 import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
+import { Actions } from 'react-native-router-flux';
 
 class UserStats extends Component {
   state = {userId: '',
@@ -49,6 +50,13 @@ class UserStats extends Component {
       mOHP: mOHP,
       mRow: mRow}
     })
+  }
+
+  handleDelete() {
+    const { userId } = this.state;
+    firebase.database().ref('users/' + userId + '/calendars').remove();
+    Actions.main();
+
   }
 
   render() {
@@ -108,6 +116,10 @@ class UserStats extends Component {
           <CardSection>
             <Button onPress={this.handleSubmit.bind(this)}>
               Save Lifts
+            </Button>
+
+            <Button onPress={this.handleDelete.bind(this)}>
+              Delete Workout
             </Button>
           </CardSection>
         </Card>

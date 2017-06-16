@@ -3,6 +3,7 @@ import { Text, ScrollView, View } from 'react-native';
 import firebase from 'firebase';
 import { Card, CardSection, ProgramCard, Button, Spinner } from '../common';
 import moment from 'moment';
+import { Actions } from 'react-native-router-flux';
 
 class ProgramShow extends React.Component {
 
@@ -87,14 +88,13 @@ class ProgramShow extends React.Component {
       for (var i = 0; i < sets.length; i++) {
         setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
       }
-
-
     })
     window.moment = moment;
     // moment().add(1, 'days').format;
     firebase.database().ref('users/' + userId + '/calendars').set({
       schedule
-    })
+    });
+    Actions.calendar();
   }
 
   // handleSubmit() {
@@ -120,11 +120,9 @@ class ProgramShow extends React.Component {
           <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p4}</Text>
-        <Card>
-          <Button onPress={this.handleSubmit.bind(this)}>
+          <Button onPress={ this.handleSubmit.bind(this) }>
             Create workout plan
           </Button>
-        </Card>
       </ScrollView>
     );
   }

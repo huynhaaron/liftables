@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import firebase from 'firebase';
 import { Button, Card, CardSection, Input, Spinner } from './common';
 import { Actions } from 'react-native-router-flux';
@@ -61,6 +61,11 @@ class LoginForm extends React.Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center'}}>
+        <Image
+          source={require('./images/liftables-logo.png')}
+          style={styles.imageStyle}
+          resizeMode='cover'
+        />
         <CardSection>
           <Input
             label="Email"
@@ -103,6 +108,10 @@ const styles = {
     fontSize: 20,
     alignSelf: 'center',
     color: 'red'
+  },
+  imageStyle: {
+    flex: 1,
+    width: null
   }
 }
 

@@ -3,7 +3,8 @@ import { Text, ScrollView, View, Alert } from 'react-native';
 import firebase from 'firebase';
 import { Card, CardSection, ProgramCard, Button, Spinner } from '../common';
 import moment from 'moment';
-import { Actions } from 'react-native-router-flux';
+import {Scene, Router, Actions} from 'react-native-router-flux';
+
 
 class ProgramShow extends React.Component {
 
@@ -52,41 +53,38 @@ class ProgramShow extends React.Component {
         that.setState({mSquat: snapshot.val().stats.mSquat});
         that.setState({mOHP: snapshot.val().stats.mOHP});
         that.setState({mRow: snapshot.val().stats.mRow});
-        // that.state.info.workout[0].squat.percent[0] * that.state.mSquat * .01
-        // that.state.info.workout[0].squat.percent.map( (x) => x * that.state.mSquat * .01)
-        // debugger;
       }
     })
   };
 
+  //handleSubmit takes user data and populates workout
   handleSubmit() {
-    //get state
     let that = this;
     const {userId, info, mBench, mDeadlift, mSquat, mOHP, mRow, date } = this.state;
-    //write data
     let schedule = {};
     let days = Object.keys(info.workout);
-    // let typeOfWorkout = Object.keys(info.workout)[0]
     let singleDate;
     days.forEach(day=>{
       singleDate = moment().add(day, 'days').format().slice(0,10);
-      let typeOfWorkout = Object.keys(info.workout[day])[0]
+      let typeOfWorkout = Object.keys(info.workout[day])[0];
       let setsDescription = [];
-      schedule[singleDate]= {}
+      schedule[singleDate]= {};
       schedule[singleDate][typeOfWorkout] = setsDescription;
+      schedule[singleDate]["complete"] = [];
       const {percent, sets} = info.workout[day][typeOfWorkout];
-
-      let personalRecords = ["mBench", "mDeadlift", "mSquat", "mOHP", "mRow"]
-
-
+      let personalRecords = ["mBench", "mDeadlift", "mSquat", "mOHP", "mRow"];
       let specificWorkoutKey = personalRecords.filter(element=>{
           let temp = element.slice(1).toLowerCase();
           return typeOfWorkout === temp;
-        })[0]
+        })[0];
       let multiplier = Number(that.state[specificWorkoutKey]);
-      // setsDescription.push
       for (var i = 0; i < sets.length; i++) {
-        setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
+
+        // setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
+
+
+        let workoutDescription  = {[`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`]: false}
+        setsDescription.push(workoutDescription);
       }
     })
 
@@ -108,30 +106,12 @@ class ProgramShow extends React.Component {
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ],
               { cancelable: true }
-        )
+        );
       }
     });
-
-
-    // firebase.database().ref('users/' + userId + '/calendars').set({
-    //   schedule
-    // });
-    // Actions.calendar();
   }
 
-  // handleSubmit() {
-  //   const {userId, mBench, mDeadlift, mSquat, mOHP, mRow } = this.state;
-  //   firebase.database().ref('users/' + userId).set({
-  //     mBench: mBench,
-  //     mDeadlift: mDeadlift,
-  //     mSquat: mSquat,
-  //     mOHP: mOHP,
-  //     mRow: mRow,
-  //   })
-  // }
-
   render() {
-    // debugger;
     return (
       <ScrollView style={{flex: 1, paddingVertical: 65, flexDirection: 'column' }}>
         <Text>
@@ -149,7 +129,7 @@ class ProgramShow extends React.Component {
     );
   }
 }
-//
+
 const styles = {
   titleStyle: {
     fontSize: 50,

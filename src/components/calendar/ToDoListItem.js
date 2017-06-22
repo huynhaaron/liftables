@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, ListView} from 'react-native';
 import CheckBox from 'react-native-checkbox';
-
+import firebase from 'firebase';
 
 class ToDoListItem extends Component {
   constructor(props){
@@ -9,20 +9,37 @@ class ToDoListItem extends Component {
     this.state = {checked: this.props.checked};
   }
 
-  componentWillReceiveProps(){
+  componentWillMount(){
     this.setState({checked: this.props.checked});
   }
 
-  onClick(){
-    this.props.checkItemsTest(this.props.label);
-    this.setState({checked: !this.state.checked});
+  componentWillReceiveProps(nextProps){
+    if (nextProps.date !== this.props.date) {
+      this.setState({checked: nextProps.checked});
+    }
   }
 
+  checkItems(index){
+    let userId = firebase.auth().currentUser.uid;
+    let date = this.props.date;
+    let type = this.props.type;
+    let boolean = !this.state.checked;
+    let description = Object.keys(this.props.label)[0];
+    let newValue = {[description]: boolean};
+    let ref = firebase.database().ref('users/' + userId + `/calendars/schedule/${date}/${type}`);
+      ref.child(index).set(newValue).then(()=>{
+          this.setState({checked: boolean});
+        });
+}
+
+
+
   render(){
+    let description = Object.keys(this.props.label)[0];
     return (
         <CheckBox
-          label={this.props.label}
-          onChange={this.onClick.bind(this)}
+          label={description}
+          onChange={()=>{this.checkItems(this.props.index);}}
           checked={this.state.checked}
         />
     );

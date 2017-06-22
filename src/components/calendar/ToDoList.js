@@ -18,7 +18,6 @@ class ToDoList extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-
     if (!nextProps.plan || nextProps.plan.length ===0 ) {
       if(nextProps.date.length > 0) {
         this.setState({workoutData: [],
@@ -36,7 +35,6 @@ class ToDoList extends Component {
        let setWeightData = entireWorkoutInfo[type];
        refactoredWorkoutData.push({[type]: setWeightData});
     }
-
     this.setState({workoutData: refactoredWorkoutData,
                    dataSource: this.state.dataSource.cloneWithRows(refactoredWorkoutData),
                    date: nextProps.date});
@@ -49,20 +47,22 @@ class ToDoList extends Component {
 
       </View>;
     }
-    
     let type = Object.keys(rowData)[0];
+    if(type === 'complete'){
+      return <View>
+
+      </View>;
+    }
     let exercises = rowData[type];
 
     return (
       <View>
-        <Text>Exercise: {type}</Text>
-        <WorkoutType type={type} exercises={exercises}/>
+        <WorkoutType type={type} exercises={exercises} date={this.state.date}/>
       </View>
     );
   }
 
   render(){
-
     return (
       <View style={styles.agendaStyle}>
           <Text style={styles.title}>To Do List {this.state.date}</Text>

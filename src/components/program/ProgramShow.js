@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View, Alert } from 'react-native';
 import firebase from 'firebase';
 import { Card, CardSection, ProgramCard, Button, Spinner } from '../common';
 import moment from 'moment';
 import {Scene, Router, Actions} from 'react-native-router-flux';
+
 
 class ProgramShow extends React.Component {
 
@@ -40,9 +41,9 @@ class ProgramShow extends React.Component {
 
 
     //get user stats
-    var userId = firebase.auth().currentUser.uid;
+    let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
-    var stats = firebase.database().ref('users/' + userId);
+    let stats = firebase.database().ref('users/' + userId);
     stats.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
@@ -78,21 +79,36 @@ class ProgramShow extends React.Component {
         })[0];
       let multiplier = Number(that.state[specificWorkoutKey]);
       for (var i = 0; i < sets.length; i++) {
-        
+
         // setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
 
 
         let workoutDescription  = {[`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`]: false}
         setsDescription.push(workoutDescription);
       }
+    })
 
+    let calendar = firebase.database().ref('users/' + userId + '/calendars');
+    calendar.once('value', function(snapshot) {
+      if (snapshot.val() === null) {
+        // console.log("nothing in the calendar")
+        // console.log("writing workout to the database...")
+        firebase.database().ref('users/' + userId + '/calendars').set({
+          schedule
+        });
+        Actions.calendar();
+      } else {
+        // console.log("something in the calendar")
+        Alert.alert(
+              'ERROR',
+              'You already have a workout in progress',
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: true }
+        );
+      }
     });
-
-    firebase.database().ref('users/' + userId + '/calendars').set({
-      schedule
-    }).then(()=>{Actions.calendar()});
-
-
   }
 
   render() {
@@ -106,11 +122,9 @@ class ProgramShow extends React.Component {
           <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p4}</Text>
-        <Card>
-          <Button onPress={this.handleSubmit.bind(this)}>
+          <Button onPress={ this.handleSubmit.bind(this) }>
             Create workout plan
           </Button>
-        </Card>
       </ScrollView>
     );
   }

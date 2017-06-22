@@ -3,75 +3,53 @@ import {View, Text, ListView, TouchableHighlight} from 'react-native';
 import {Button, CardSection} from '../common';
 import CheckBox from 'react-native-checkbox';
 import ToDoListItem from './ToDoListItem';
-
+import firebase from 'firebase';
 
 
 class WorkoutType extends Component {
   constructor(props){
     super(props);
-    this.checked = [];
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: [],
       dataSource: ds,
+      data: [],
     };
   }
 
   componentWillMount(){
     let newData = this.props.exercises; //if undefined, skip.
     if(!newData) return;
-
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(newData)});
-  }
-
-  componentWillReceiveProps(nextProps){
-    let newData = nextProps.exercises;
     this.setState({data: newData, dataSource: this.state.dataSource.cloneWithRows(newData)});
   }
 
-  checkItems(rowData){
-    if (this.checked.includes(rowData)){
-      this.checked.splice(this.checked.indexOf(rowData), 1);
-    } else {
-      this.checked.push(rowData);
+  componentWillReceiveProps(nextProps){
+    if (nextProps.exercises !== this.props.exercises) {
+      this.setState({data: nextProps.exercises, dataSource: this.state.dataSource.cloneWithRows(nextProps.exercises)});
     }
   }
 
-  clearCheckedItems(){
-    let newData = this.state.data.slice();
+  renderListItem(rowData, index){
+    let exerciseDescription = Object.keys(rowData)[0];
+    let checked = rowData[exerciseDescription];
 
-    this.checked.forEach(checkedItem=>{
-      if(newData.includes(checkedItem)){
-        newData.splice(newData.indexOf(checkedItem), 1);
-      }
-    });
-    this.checked = [];
-    this.setState({
-      data: newData,
-      dataSource: this.state.dataSource.cloneWithRows(newData)
-    });
-  }
-
-  renderListItem(rowData){
     return (
-      <ToDoListItem
-        label={rowData}
-        checkItemsTest={this.checkItems.bind(this)}
-        checked={false}/>
+        <ToDoListItem
+          label={rowData}
+          checked={checked}
+          date={this.props.date}
+          index={index}
+          type={this.props.type}/>
     );
   }
 
   render(){
     return (
       <View>
+        <Text>Exercise: {this.props.type}</Text>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={this.renderListItem.bind(this)}
+            renderRow={(rowData, sectionID, rowIndex)=>this.renderListItem(rowData, rowIndex)}
             />
-          <Button style={styles.buttonStyle}
-            onPress={this.clearCheckedItems.bind(this)}>
-            Clear Completed
-          </Button>
       </View>);
   }
 }

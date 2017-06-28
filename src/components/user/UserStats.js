@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import firebase from 'firebase';
 import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
 import { Actions } from 'react-native-router-flux';
+import Tabs from 'react-native-tabs';
+
 
 class UserStats extends Component {
   state = {userId: '',
@@ -11,7 +13,8 @@ class UserStats extends Component {
            mSquat: '',
            mOHP: '',
            mRow: '',
-           loading: true};
+           loading: true,
+         page: 'stats'};
 
   componentDidMount() {
     let that = this;
@@ -123,7 +126,19 @@ class UserStats extends Component {
             </Button>
           </CardSection>
         </Card>
+        <Tabs selected={this.state.page}
+          style={{backgroundColor:'white', position: 'absolute', bottom: 0}}
+          selectedStyle={{color:'red'}}
+          selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}
+          onSelect={el=>this.setState({page:el.props.name})}>
+          <Text name="first" onPress={Actions.main} >Main</Text>
+          <Text name="stats" onPress={Actions.userstats} >Stats</Text>
+          <Text name="programs" onPress={Actions.programs} > Programs</Text>
+          <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
+          <Text name="fifth">Settings</Text>
+        </Tabs>
       </View>
+
     );
   }
 }

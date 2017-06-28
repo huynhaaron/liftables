@@ -43,7 +43,7 @@ class UserStats extends Component {
   handleSubmit() {
     const {userId, mBench, mDeadlift, mSquat, mOHP, mRow } = this.state;
     firebase.database().ref('users/' + userId).set({
-      Stats: {
+      stats: {
       mBench: mBench,
       mDeadlift: mDeadlift,
       mSquat: mSquat,

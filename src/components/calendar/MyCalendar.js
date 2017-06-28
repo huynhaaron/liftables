@@ -3,6 +3,9 @@ import { Text, StyleSheet, View } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import ToDoList from './ToDoList';
 import firebase from 'firebase';
+import {Actions} from 'react-native-router-flux';
+import Tabs from 'react-native-tabs';
+
 
 export default class MyCalendar extends Component {
   constructor(props){
@@ -12,7 +15,7 @@ export default class MyCalendar extends Component {
     this.year = '';
     this.todaysDate();
     let dateKey = `${this.year}-${this.formatDate(this.month)}-${this.formatDate(this.day)}`;
-    this.state = { calendar: [], workout: [], date: `${dateKey}`};
+    this.state = { calendar: [], workout: [], date: `${dateKey}`, page: 'calendar'};
     this.database = firebase.database();
     this.userId = firebase.auth().currentUser.uid;
   }
@@ -82,6 +85,17 @@ export default class MyCalendar extends Component {
           onDayPress={(day)=> this.renderWorkout(day)}
           />
         <ToDoList plan={this.state.workout} date={this.state.date}/>
+        <Tabs selected={this.state.page}
+          style={{backgroundColor:'white', position: 'absolute', bottom: 0}}
+          selectedStyle={{color:'red'}}
+          selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}
+          onSelect={el=>this.setState({page:el.props.name})}>
+          <Text name="first" onPress={Actions.main} >Main</Text>
+          <Text name="stats" onPress={Actions.userstats} >Stats</Text>
+          <Text name="programs" onPress={Actions.programs} > Programs</Text>
+          <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
+          <Text name="fifth">Settings</Text>
+        </Tabs>
       </View>
     );
   }

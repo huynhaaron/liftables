@@ -103,7 +103,14 @@ class ProgramShow extends React.Component {
               'ERROR',
               'You already have a workout in progress',
               [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                {text: 'OK, take me back', onPress: () => console.log('OK Pressed')},
+                {text: 'I understand, start new workout', onPress: () => {
+                                              firebase.database().ref('users/' + userId + '/calendars').remove();
+                                              firebase.database().ref('users/' + userId + '/calendars').set({
+                                                schedule
+                                              });
+                                              Actions.calendar();
+                                            }}
               ],
               { cancelable: true }
         );

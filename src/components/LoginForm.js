@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import firebase from 'firebase';
-import { Button, Card, CardSection, Input, Spinner } from './common';
+import { LoginButton, Button, Card, LoginCardSection, CardSection, Input, Spinner } from './common';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -60,7 +60,7 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', backgroundColor: "#84261e", paddingBottom: 20 }}>
         <Image
           source={require('./images/liftables-logo.png')}
           style={styles.imageStyle}
@@ -88,14 +88,14 @@ class LoginForm extends React.Component {
 
         {this.renderButton()}
 
-        <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
+        <LoginCardSection>
+          <LoginButton onPress={this.onButtonPress.bind(this)}>
             Log in
-          </Button>
-          <Button onPress={this.demoLogin.bind(this)}>
+          </LoginButton>
+          <LoginButton onPress={this.demoLogin.bind(this)}>
             Demo User
-          </Button>
-        </CardSection>
+          </LoginButton>
+        </LoginCardSection>
 
       </View>
 

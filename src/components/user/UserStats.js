@@ -8,11 +8,14 @@ import Tabs from 'react-native-tabs';
 
 class UserStats extends Component {
   state = {userId: '',
-           mBench: '',
-           mDeadlift: '',
-           mSquat: '',
-           mOHP: '',
-           mRow: '',
+           mBench: '100',
+           mDeadlift: '100',
+           mSquat: '100',
+           mOHP: '100',
+           mRow: '100',
+           mPress: '100',
+           mPowerclean: '100',
+           mChinup: '10',
            loading: true,
          page: 'stats'};
 
@@ -28,11 +31,14 @@ class UserStats extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench});
-        that.setState({mDeadlift: snapshot.val().stats.mDeadlift});
-        that.setState({mSquat: snapshot.val().stats.mSquat});
-        that.setState({mOHP: snapshot.val().stats.mOHP});
-        that.setState({mRow: snapshot.val().stats.mRow});
+        that.setState({mBench: snapshot.val().Stats.mBench,
+        mDeadlift: snapshot.val().Stats.mDeadlift,
+        mSquat: snapshot.val().Stats.mSquat,
+        mOHP: snapshot.val().Stats.mOHP,
+        mPowerclean: snapshot.val().Stats.mPowerclean,
+        mPress: snapshot.val().Stats.mPress,
+        mChinup: snapshot.val().Stats.mChinup,
+        mRow: snapshot.val().Stats.mRow});
       }
     })
   }
@@ -44,14 +50,17 @@ class UserStats extends Component {
   }
 
   handleSubmit() {
-    const {userId, mBench, mDeadlift, mSquat, mOHP, mRow } = this.state;
+    const {userId, mBench, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
     firebase.database().ref('users/' + userId).set({
       stats: {
       mBench: mBench,
       mDeadlift: mDeadlift,
       mSquat: mSquat,
       mOHP: mOHP,
-      mRow: mRow}
+      mRow: mRow,
+      mPress: mPress,
+      mPowerclean: mPowerclean,
+      mChinup: mChinup}
     })
   }
 
@@ -113,6 +122,33 @@ class UserStats extends Component {
               placeholder="Max Row in lb."
               value={this.state.mRow}
               onChangeText={mRow => this.setState({mRow})}
+            />
+          </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max Press"
+              placeholder="Max Press in lb."
+              value={this.state.mPress}
+              onChangeText={mPress => this.setState({mPress})}
+            />
+          </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max Chinup"
+              placeholder="Max Chinup in reps"
+              value={this.state.mChinup}
+              onChangeText={mChinup => this.setState({mChinup})}
+            />
+          </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max Powerclean"
+              placeholder="Max Powerclean in lb."
+              value={this.state.mPowerclean}
+              onChangeText={mPowerclean => this.setState({mPowerclean})}
             />
           </CardSection>
 

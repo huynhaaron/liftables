@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ListView, TouchableHighlight} from 'react-native';
+import {View, Text, ListView, TouchableHighlight, ScrollView} from 'react-native';
 import WorkoutType from './WorkoutType';
 
 class ToDoList extends Component {
@@ -65,12 +65,15 @@ class ToDoList extends Component {
   render(){
     return (
       <View style={styles.agendaStyle}>
+        <ScrollView style={{flex:1}}>
           <Text style={styles.title}>To Do List {this.state.date}</Text>
           <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderListItem.bind(this)}
           enableEmptySections
           />
+        <View style={{height: 120}} />
+        </ScrollView>
       </View>
     );
   }

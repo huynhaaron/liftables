@@ -18,6 +18,9 @@ class ProgramShow extends React.Component {
                    mSquat: '',
                    mOHP: '',
                    mRow: '',
+                   mPress: '',
+                   mChinup: '',
+                   mPowerclean: '',
                    date: moment().format('YYYY-MM-DD')
     };
   }
@@ -27,15 +30,13 @@ class ProgramShow extends React.Component {
     let database = firebase.database();
 
     let info = firebase.database().ref('programs/' + that.props.name);
+
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
         //info has all the description and ratios
         that.setState({info: snapshot.val()});
-        //get workout program percentage/sets
-        //snapshot.val().workout[0].squat.sets[0]
-        // that.setState({workout: snapshot.val().workout});
       }
     });
 
@@ -48,45 +49,56 @@ class ProgramShow extends React.Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench});
-        that.setState({mDeadlift: snapshot.val().stats.mDeadlift});
-        that.setState({mSquat: snapshot.val().stats.mSquat});
-        that.setState({mOHP: snapshot.val().stats.mOHP});
-        that.setState({mRow: snapshot.val().stats.mRow});
+        that.setState({mBench: snapshot.val().Stats.mBench,
+        mDeadlift: snapshot.val().Stats.mDeadlift,
+        mSquat: snapshot.val().Stats.mSquat,
+        mOHP: snapshot.val().Stats.mOHP,
+        mRow: snapshot.val().Stats.mRow,
+        mPowerclean: snapshot.val().Stats.mPowerclean,
+        mPress: snapshot.val().Stats.mPress,
+        mChinup: snapshot.val().Stats.mChinup});
       }
-    })
-  };
+    });
+  }
 
   //handleSubmit takes user data and populates workout
   handleSubmit() {
     let that = this;
-    const {userId, info, mBench, mDeadlift, mSquat, mOHP, mRow, date } = this.state;
+    const {userId, info, mBench, mDeadlift, mSquat, mOHP, mRow, mPress, mChinup, mPowerclean, date } = this.state;
     let schedule = {};
+
     let days = Object.keys(info.workout);
     let singleDate;
     days.forEach(day=>{
       singleDate = moment().add(day, 'days').format().slice(0,10);
-      let typeOfWorkout = Object.keys(info.workout[day])[0];
-      let setsDescription = [];
+
+      let typeOfWorkout = Object.keys(info.workout[day]);
+      let setsDescription;
       schedule[singleDate]= {};
-      schedule[singleDate][typeOfWorkout] = setsDescription;
-      schedule[singleDate]["complete"] = [];
-      const {percent, sets} = info.workout[day][typeOfWorkout];
-      let personalRecords = ["mBench", "mDeadlift", "mSquat", "mOHP", "mRow"];
-      let specificWorkoutKey = personalRecords.filter(element=>{
-          let temp = element.slice(1).toLowerCase();
-          return typeOfWorkout === temp;
-        })[0];
-      let multiplier = Number(that.state[specificWorkoutKey]);
-      for (var i = 0; i < sets.length; i++) {
+      //nested loop required for workout types and sets
+      typeOfWorkout.forEach(workoutType => {
+        setsDescription = [];
+        schedule[singleDate][workoutType] = setsDescription;
+        const {percent, sets} = info.workout[day][workoutType];
 
-        // setsDescription.push(`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`)
-
-
-        let workoutDescription  = {[`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`]: false}
-        setsDescription.push(workoutDescription);
-      }
-    })
+        let personalRecords = ["mBench", "mDeadlift", "mSquat", "mOHP", "mRow", "mPress", "mChinup", "mPowerclean"];
+        let specificWorkoutKey = personalRecords.filter(element=>{
+            let temp = element.slice(1).toLowerCase();
+            return workoutType === temp;
+          })[0];
+        let multiplier = Number(that.state[specificWorkoutKey]);
+        for (var i = 0; i < sets.length; i++) {
+          let workoutDescription;
+          if (specificWorkoutKey === 'mChinup') {
+            let numReps = Math.ceil(multiplier * .01 * percent[i])
+            workoutDescription = {[`${numReps} reps`]: false}
+          } else {
+            workoutDescription  = {[`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`]: false}
+          }
+          setsDescription.push(workoutDescription);
+        }
+      });
+    });
 
     let calendar = firebase.database().ref('users/' + userId + '/calendars');
     calendar.once('value', function(snapshot) {
@@ -118,6 +130,20 @@ class ProgramShow extends React.Component {
     });
   }
 
+  grabInfo(){
+
+
+    if (!this.state.info.workout){
+      return (<View>
+
+      </View>);
+    } else {
+      return (<Button onPress={this.handleSubmit.bind(this)}>
+        Create workout plan
+      </Button>);
+    }
+  }
+
   render() {
     return (
       <ScrollView style={{flex: 1, paddingVertical: 65, flexDirection: 'column' }}>
@@ -128,10 +154,7 @@ class ProgramShow extends React.Component {
           <Text style={styles.descriptionStyle}> {this.state.info.p1}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
           <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
-          <Text style={styles.descriptionStyle}> {this.state.info.p4}</Text>
-          <Button onPress={ this.handleSubmit.bind(this) }>
-            Create workout plan
-          </Button>
+          {this.grabInfo()}
       </ScrollView>
     );
   }

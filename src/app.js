@@ -45,7 +45,7 @@ class App extends Component {
     return (
       <Router>
         <Scene key="auth">
-          <Scene key="loginform" component={LoginForm} title="Liftables" initial={true} />
+          <Scene key="loginform" hideNavBar component={LoginForm} title="Liftables" initial={true} />
         </Scene>
         <Scene key="root" rightTitle="Logout" onRight={this.logout.bind(this)}>
           <Scene key="main" component={Main} title="Liftables" />

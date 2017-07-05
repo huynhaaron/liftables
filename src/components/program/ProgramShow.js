@@ -14,6 +14,7 @@ class ProgramShow extends React.Component {
                    info: {},
                    userId: '',
                    mBench: '',
+                   mCurls: '',
                    mDeadlift: '',
                    mSquat: '',
                    mOHP: '',
@@ -49,14 +50,15 @@ class ProgramShow extends React.Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().Stats.mBench,
-        mDeadlift: snapshot.val().Stats.mDeadlift,
-        mSquat: snapshot.val().Stats.mSquat,
-        mOHP: snapshot.val().Stats.mOHP,
-        mRow: snapshot.val().Stats.mRow,
-        mPowerclean: snapshot.val().Stats.mPowerclean,
-        mPress: snapshot.val().Stats.mPress,
-        mChinup: snapshot.val().Stats.mChinup});
+        that.setState({mBench: snapshot.val().stats.mBench,
+          mCurls: snapshot.val().stats.mCurls,
+        mDeadlift: snapshot.val().stats.mDeadlift,
+        mSquat: snapshot.val().stats.mSquat,
+        mOHP: snapshot.val().stats.mOHP,
+        mRow: snapshot.val().stats.mRow,
+        mPowerclean: snapshot.val().stats.mPowerclean,
+        mPress: snapshot.val().stats.mPress,
+        mChinup: snapshot.val().stats.mChinup});
       }
     });
   }
@@ -64,7 +66,7 @@ class ProgramShow extends React.Component {
   //handleSubmit takes user data and populates workout
   handleSubmit() {
     let that = this;
-    const {userId, info, mBench, mDeadlift, mSquat, mOHP, mRow, mPress, mChinup, mPowerclean, date } = this.state;
+    const {userId, info, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPress, mChinup, mPowerclean, date } = this.state;
     let schedule = {};
 
     let days = Object.keys(info.workout);
@@ -81,7 +83,7 @@ class ProgramShow extends React.Component {
         schedule[singleDate][workoutType] = setsDescription;
         const {percent, sets} = info.workout[day][workoutType];
 
-        let personalRecords = ["mBench", "mDeadlift", "mSquat", "mOHP", "mRow", "mPress", "mChinup", "mPowerclean"];
+        let personalRecords = ["mBench", "mCurls", "mDeadlift", "mSquat", "mOHP", "mRow", "mPress", "mChinup", "mPowerclean"];
         let specificWorkoutKey = personalRecords.filter(element=>{
             let temp = element.slice(1).toLowerCase();
             return workoutType === temp;
@@ -89,11 +91,20 @@ class ProgramShow extends React.Component {
         let multiplier = Number(that.state[specificWorkoutKey]);
         for (var i = 0; i < sets.length; i++) {
           let workoutDescription;
+
+
+
           if (specificWorkoutKey === 'mChinup') {
+            
             let numReps = Math.ceil(multiplier * .01 * percent[i])
             workoutDescription = {[`${numReps} reps`]: false}
-          } else {
-            workoutDescription  = {[`${sets[i]} reps x ${multiplier * .01 * percent[i]} lbs`]: false}
+          }
+          else if (sets[i] === "AMRAP"){
+            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false}
+          }
+          else {
+            let weight = Math.floor(multiplier * .01 * percent[i])
+            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false}
           }
           setsDescription.push(workoutDescription);
         }

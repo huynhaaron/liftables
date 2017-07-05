@@ -9,6 +9,7 @@ import Tabs from 'react-native-tabs';
 class UserStats extends Component {
   state = {userId: '',
            mBench: '100',
+           mCurls: '100',
            mDeadlift: '100',
            mSquat: '100',
            mOHP: '100',
@@ -31,14 +32,15 @@ class UserStats extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().Stats.mBench,
-        mDeadlift: snapshot.val().Stats.mDeadlift,
-        mSquat: snapshot.val().Stats.mSquat,
-        mOHP: snapshot.val().Stats.mOHP,
-        mPowerclean: snapshot.val().Stats.mPowerclean,
-        mPress: snapshot.val().Stats.mPress,
-        mChinup: snapshot.val().Stats.mChinup,
-        mRow: snapshot.val().Stats.mRow});
+        that.setState({mBench: snapshot.val().stats.mBench,
+        mCurls: snapshot.val().stats.mCurls,
+        mDeadlift: snapshot.val().stats.mDeadlift,
+        mSquat: snapshot.val().stats.mSquat,
+        mOHP: snapshot.val().stats.mOHP,
+        mPowerclean: snapshot.val().stats.mPowerclean,
+        mPress: snapshot.val().stats.mPress,
+        mChinup: snapshot.val().stats.mChinup,
+        mRow: snapshot.val().stats.mRow});
       }
     })
   }
@@ -50,10 +52,11 @@ class UserStats extends Component {
   }
 
   handleSubmit() {
-    const {userId, mBench, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
+    const {userId, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
     firebase.database().ref('users/' + userId).set({
       stats: {
       mBench: mBench,
+      mCurls,
       mDeadlift: mDeadlift,
       mSquat: mSquat,
       mOHP: mOHP,
@@ -86,6 +89,15 @@ class UserStats extends Component {
               placeholder="Max Bench in lb."
               value={this.state.mBench}
               onChangeText={mBench => this.setState({mBench})}
+            />
+          </CardSection>
+
+          <CardSection>
+            <Input
+              label="Max Curl"
+              placeholder="Max Curl in lb."
+              value={this.state.mCurls}
+              onChangeText={mCurls => this.setState({mCurls})}
             />
           </CardSection>
 

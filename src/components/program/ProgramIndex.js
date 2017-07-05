@@ -36,7 +36,7 @@ export default class ProgramIndex extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "Greyskull LP"})}>
+          <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "GreySkull LP"})}>
             <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494962261/Liftables/skull.png'}}/>
             <View style={styles.textStyle}>
               <Text style={styles.titleStyle}>Greyskull LP</Text>

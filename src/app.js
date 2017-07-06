@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import { Header, Card, CardSection, Spinner, Button } from './components/common';
 
 import Main from './components/Main';
+import About from './components/About';
 import UserStats from './components/user/UserStats';
 import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
@@ -49,9 +50,10 @@ class App extends Component {
         </Scene>
         <Scene key="root" rightTitle="Logout" onRight={this.logout.bind(this)}>
           <Scene key="main" component={Main} title="Liftables" />
+          <Scene key="about" component={About} title="About" />
           <Scene key="userstats" component={UserStats} title="Settings" />
           <Scene key="programs" component={ProgramIndex} title="Programs"/>
-          <Scene key="programshow" component={ProgramShow} title="Program Show" />
+          <Scene key="programshow" component={ProgramShow} title="Program"/>
           <Scene key="calendar" component={MyCalendar} title="Calendar" />
         </Scene>
       </Router>

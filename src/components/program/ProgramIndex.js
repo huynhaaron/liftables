@@ -53,9 +53,9 @@ export default class ProgramIndex extends React.Component {
           selectedStyle={{color:'red'}}
           selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}
           onSelect={el=>this.setState({page:el.props.name})}>
-          <Text name="first" onPress={Actions.main} >Main</Text>
+          <Text name="first" onPress={Actions.about} >About</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
-          <Text name="programs" onPress={Actions.programs} > Programs</Text>
+          <Text name="programs" onPress={Actions.programs} >Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
           <Text name="fifth">Settings</Text>
         </Tabs>

@@ -7,15 +7,15 @@ import {
 const Spinner = ({ size }) => {
   return (
     <View style={styles.spinnerStyle}>
-      <ActivityIndicator size={size || 'large'}/>
+      <ActivityIndicator size={size || 'small'}/>
     </View>
   );
 };
 
 const styles = {
   spinnerStyle: {
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
     justifyContent: 'center',
     alignItems: 'center'
   }

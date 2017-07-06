@@ -44,22 +44,6 @@ export default class ProgramIndex extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardStyle} onPress={() => Actions.programshow({name: "IceCream Fitness"})}>
-            <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
-            <View style={styles.textStyle}>
-              <Text style={styles.titleStyle}>IceCream Fitness</Text>
-              <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.cardStyle} onPress={Actions.programshow}>
-            <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
-            <View style={styles.textStyle}>
-              <Text style={styles.titleStyle}>IceCream Fitness</Text>
-              <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
-            </View>
-          </TouchableOpacity>
-
           {/* Needed to allow screen to scroll all the way down */}
           <View style={styles.blankStyle} />
 

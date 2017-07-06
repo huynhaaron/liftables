@@ -94,7 +94,7 @@ export default class MyCalendar extends Component {
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
           <Text name="programs" onPress={Actions.programs} > Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
-          <Text name="fifth">Settings</Text>
+          <Text name="progress" onPress={Actions.progress} >Progress</Text>
         </Tabs>
       </View>
     );

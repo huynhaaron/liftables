@@ -27,9 +27,9 @@ class Main extends Component {
           onSelect={el=>this.setState({page:el.props.name})}>
           <Text name="first" onPress={Actions.main} >Main</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
-          <Text name="third" onPress={Actions.programs} > Programs</Text>
-          <Text name="fourth" onPress={Actions.calendar} >Calendar</Text>
-          <Text name="fifth">Settings</Text>
+          <Text name="third" onPress={Actions.programs}> Programs</Text>
+          <Text name="fourth" onPress={Actions.calendar}> Calendar</Text>
+          <Text name="fifth" onPress={Actions.progress}> Progress</Text>
         </Tabs>
 
       </View>

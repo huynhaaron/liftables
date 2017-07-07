@@ -66,7 +66,7 @@ class ToDoList extends Component {
     return (
       <View style={styles.agendaStyle}>
         <ScrollView style={{flex:1}}>
-          <Text style={styles.title}>To Do List {this.state.date}</Text>
+          <Text style={styles.title}>To Do List for {this.state.date}</Text>
           <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderListItem.bind(this)}
@@ -82,12 +82,14 @@ class ToDoList extends Component {
 const styles = {
   agendaStyle: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingHorizontal: 15
   },
   title: {
     fontSize: 20,
     alignSelf: 'center',
     marginTop: 10,
+    paddingBottom: 5
   },
 };
 

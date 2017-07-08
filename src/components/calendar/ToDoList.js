@@ -48,11 +48,6 @@ class ToDoList extends Component {
       </View>;
     }
     let type = Object.keys(rowData)[0];
-    if(type === 'complete'){
-      return <View>
-
-      </View>;
-    }
     let exercises = rowData[type];
 
     return (

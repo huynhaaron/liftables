@@ -25,7 +25,7 @@ export default class MyCalendar extends Component {
     let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
     info.once('value', function(snapshot) {
         that.setState({ calendar: Object.keys(snapshot.val())}, ()=>{
-            that.setColor();
+            that.setColor();  //first you set the calendar days, then you set the color of the days.
           });
     });
   }
@@ -39,6 +39,8 @@ export default class MyCalendar extends Component {
     let that = this;
     let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
 
+
+    //listener for whenever a task is checkmarked. Need to check if the date is "complete"
     info.on('value', function(snapshot) {
       let completedDates = [];
         that.state.calendar.forEach(date => {
@@ -46,7 +48,8 @@ export default class MyCalendar extends Component {
             completedDates.push(date);
           }
         });
-      that.setState({completed: completedDates});
+
+      that.setState({completed: completedDates}, ()=>that.completedWorkout());
     });
   }
 
@@ -71,17 +74,47 @@ export default class MyCalendar extends Component {
               if (!set[key]) {
                 completed = false;
                 return;
+              }
             }
           }
           completed = true;
           return;
-       }
      });
   if (completed){
     return true;
   } else {
     return false;
   }
+}
+
+//checks whether the workout is complete
+completedWorkout(){
+  let numCompleted;
+
+  let completed = firebase.database().ref('users/' + this.userId + '/calendars/complete');
+  completed.once("value", (snapshot)=>{
+    let boolean = snapshot.val();
+    if(!boolean){
+      if(this.state.completed.length === this.state.calendar.length){
+        firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot2=>{
+          numCompleted = snapshot2.val();
+          numCompleted += 1;
+          firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
+        }).then(()=>{
+          firebase.database().ref('users/' + this.userId + '/calendars/complete').set(true);
+        });
+      }
+    } else {
+      if(this.state.completed.length !== this.state.calendar.length)
+        firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot3=>{
+          numCompleted = snapshot3.val();
+          numCompleted -= 1;
+          firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
+        }).then(()=>{
+          firebase.database().ref('users/' + this.userId + '/calendars/complete').set(false)
+        });
+    }
+  });
 }
 
   renderWorkout(date){
@@ -104,6 +137,24 @@ export default class MyCalendar extends Component {
     return date;
   }
 
+  renderColor(){
+    //logic to change the color of the day
+    let markedDate = {};
+    this.state.calendar.forEach(date => {
+      markedDate[date] = [{startingDay: true, color: 'yellow'},
+        {endingDay: true, color: 'yellow'}];
+      for (var i = 0; i < this.state.completed.length; i++) {
+        if (date === this.state.completed[i]){
+          markedDate[date] = [{startingDay: true, color: 'green'},
+            {endingDay: true, color: 'green'}];
+        }
+      }
+    });
+
+
+    return markedDate;
+  }
+
   todaysDate(){
     let today = new Date();
     this.month = today.getMonth()+1;
@@ -112,18 +163,8 @@ export default class MyCalendar extends Component {
   }
 
   render() {
-    let markedDate = {};
-    this.state.calendar.forEach(date => {
-      markedDate[date] = [{startingDay: true, color: 'yellow'},
-        {endingDay: true, color: 'yellow'}];
-      for (var i = 0; i < this.state.completed.length; i++) {
 
-        if (date === this.state.completed[i]){
-          markedDate[date] = [{startingDay: true, color: 'green'},
-            {endingDay: true, color: 'green'}];
-        }
-      }
-    });
+    let markedDate = this.renderColor();
 
     return (
       <View style={styles.containerStyle}>
@@ -148,7 +189,13 @@ export default class MyCalendar extends Component {
       </View>
     );
   }
+
+  componentDidUpdate(){
+    this.completedWorkout();
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   calendarStyle: {

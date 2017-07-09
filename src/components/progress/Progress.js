@@ -19,7 +19,7 @@ class Progress extends Component {
     let info = firebase.database().ref('users/' + currentUser + '/data')
     info.once('value', function(snapshot){
       that.setState({ info: snapshot.val(), loading: false});
-    });
+    }); 
   }
 
   loading(){

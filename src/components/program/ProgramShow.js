@@ -91,20 +91,17 @@ class ProgramShow extends React.Component {
         let multiplier = Number(that.state[specificWorkoutKey]);
         for (var i = 0; i < sets.length; i++) {
           let workoutDescription;
-
-
-
           if (specificWorkoutKey === 'mChinup') {
-            
-            let numReps = Math.ceil(multiplier * .01 * percent[i])
-            workoutDescription = {[`${numReps} reps`]: false}
+
+            let numReps = Math.ceil(multiplier * .01 * percent[i]);
+            workoutDescription = {[`${numReps} reps`]: false};
           }
           else if (sets[i] === "AMRAP"){
-            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false}
+            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false};
           }
           else {
-            let weight = Math.floor(multiplier * .01 * percent[i])
-            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false}
+            let weight = Math.floor(multiplier * .01 * percent[i]);
+            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false};
           }
           setsDescription.push(workoutDescription);
         }
@@ -114,14 +111,12 @@ class ProgramShow extends React.Component {
     let calendar = firebase.database().ref('users/' + userId + '/calendars');
     calendar.once('value', function(snapshot) {
       if (snapshot.val() === null) {
-        // console.log("nothing in the calendar")
-        // console.log("writing workout to the database...")
         firebase.database().ref('users/' + userId + '/calendars').set({
-          schedule
+          schedule,
+          complete: false
         });
         Actions.calendar();
       } else {
-        // console.log("something in the calendar")
         Alert.alert(
               'ERROR',
               'You already have a workout in progress',
@@ -130,7 +125,8 @@ class ProgramShow extends React.Component {
                 {text: 'I understand, start new workout', onPress: () => {
                                               firebase.database().ref('users/' + userId + '/calendars').remove();
                                               firebase.database().ref('users/' + userId + '/calendars').set({
-                                                schedule
+                                                schedule,
+                                                complete: false
                                               });
                                               Actions.calendar();
                                             }}

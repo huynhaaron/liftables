@@ -35,22 +35,47 @@ export default class MyCalendar extends Component {
     this.renderWorkout(dateParam);  //renders today's date.
   }
 
-  setColor(){
-    let that = this;
-    let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
+//checks whether the entire workout is complete
+  completedWorkout(){
+    let numCompleted;
 
-
-    //listener for whenever a task is checkmarked. Need to check if the date is "complete"
-    info.on('value', function(snapshot) {
-      let completedDates = [];
-        that.state.calendar.forEach(date => {
-          if (that.isCompleted(date)){
-            completedDates.push(date);
-          }
-        });
-
-      that.setState({completed: completedDates}, ()=>that.completedWorkout());
+    let completed = firebase.database().ref('users/' + this.userId + '/calendars/complete');
+    completed.once("value", (snapshot)=>{
+      let boolean = snapshot.val();
+      if(!boolean){
+        if(this.state.completed.length === this.state.calendar.length){
+          firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot2=>{
+            numCompleted = snapshot2.val();
+            numCompleted += 1;
+            firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
+          }).then(()=>{
+            firebase.database().ref('users/' + this.userId + '/calendars/complete').set(true);
+          });
+        }
+      } else {
+        if(this.state.completed.length !== this.state.calendar.length)
+          firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot3=>{
+            numCompleted = snapshot3.val();
+            numCompleted -= 1;
+            firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
+          }).then(()=>{
+            firebase.database().ref('users/' + this.userId + '/calendars/complete').set(false);
+          });
+      }
     });
+  }
+
+  daysTracker(){
+    firebase.database().ref('users/' + this.userId + '/data/daysDone').set(this.state.completed.length)
+    firebase.database().ref('users/' + this.userId + '/data/daysLeft')
+    .set(this.state.calendar.length - this.state.completed.length);
+  }
+
+  formatDate(date) {
+    if (date < 10) {
+      date = `0${date}`;
+    }
+    return date;
   }
 
   isCompleted(date){
@@ -80,65 +105,15 @@ export default class MyCalendar extends Component {
           completed = true;
           return;
      });
-  if (completed){
-    return true;
-  } else {
-    return false;
-  }
-}
-
-//checks whether the workout is complete
-completedWorkout(){
-  let numCompleted;
-
-  let completed = firebase.database().ref('users/' + this.userId + '/calendars/complete');
-  completed.once("value", (snapshot)=>{
-    let boolean = snapshot.val();
-    if(!boolean){
-      if(this.state.completed.length === this.state.calendar.length){
-        firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot2=>{
-          numCompleted = snapshot2.val();
-          numCompleted += 1;
-          firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
-        }).then(()=>{
-          firebase.database().ref('users/' + this.userId + '/calendars/complete').set(true);
-        });
-      }
+    if (completed){
+      return true;
     } else {
-      if(this.state.completed.length !== this.state.calendar.length)
-        firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot3=>{
-          numCompleted = snapshot3.val();
-          numCompleted -= 1;
-          firebase.database().ref('users/' + this.userId + '/data/completed').set(numCompleted);
-        }).then(()=>{
-          firebase.database().ref('users/' + this.userId + '/calendars/complete').set(false)
-        });
+      return false;
     }
-  });
-}
-
-  renderWorkout(date){
-
-    const {year, month, day} = date;
-    let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
-
-    let that = this;
-     let info = firebase.database().ref('users/' + this.userId + '/calendars');
-
-     info.once('value', function(snapshot) {
-          that.setState({workout: snapshot.val()["schedule"][dateKey], date: dateKey});
-        });
-  }
-
-  formatDate(date) {
-    if (date < 10) {
-      date = `0${date}`;
-    }
-    return date;
   }
 
   renderColor(){
-    //logic to change the color of the day
+    //logic to set the color of the day
     let markedDate = {};
     this.state.calendar.forEach(date => {
       markedDate[date] = [{startingDay: true, color: 'yellow'},
@@ -151,8 +126,41 @@ completedWorkout(){
       }
     });
 
-
     return markedDate;
+  }
+
+  renderWorkout(date){
+    const {year, month, day} = date;
+    let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
+
+    let that = this;
+    let info = firebase.database().ref('users/' + this.userId + '/calendars');
+
+    info.once('value', function(snapshot) {
+        that.setState({workout: snapshot.val()["schedule"][dateKey], date: dateKey});
+    });
+  }
+
+  //this sets the color of a day.
+  setColor(){
+    let that = this;
+    let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
+    //listener for whenever a task is checkmarked. Need to check if the date is "complete"
+    info.on('value', function(snapshot) {
+      let completedDates = [];
+        that.state.calendar.forEach(date => {
+          if (that.isCompleted(date)){
+            completedDates.push(date);
+          }
+        });
+      //if day is completed, setState is called here
+      //to change the color, then the callback is called to see
+      //if the entire workout is completed.
+      that.setState({completed: completedDates}, ()=>{
+        that.daysTracker();  //updates progress tab
+        that.completedWorkout();
+      });
+    });
   }
 
   todaysDate(){
@@ -182,7 +190,7 @@ completedWorkout(){
           onSelect={el=>this.setState({page:el.props.name})}>
           <Text name="first" onPress={Actions.main} >Main</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
-          <Text name="programs" onPress={Actions.programs} > Programs</Text>
+          <Text name="programs" onPress={Actions.programs} >Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
           <Text name="progress" onPress={Actions.progress} >Progress</Text>
         </Tabs>

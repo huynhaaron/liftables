@@ -10,7 +10,8 @@ class Progress extends Component {
   state = {
          page: 'progress',
        loading: true,
-     info: {}
+     info: {},
+     weight: ''
    };
 
   componentWillMount(){
@@ -19,7 +20,11 @@ class Progress extends Component {
     let info = firebase.database().ref('users/' + currentUser + '/data')
     info.once('value', function(snapshot){
       that.setState({ info: snapshot.val(), loading: false});
-    }); 
+    });
+    let weight = firebase.database().ref('users/' + currentUser + '/stats')
+    weight.once('value', function(snapshot){
+      that.setState({ weight: snapshot.val().mWeight, loading: false});
+    });
   }
 
   loading(){
@@ -32,7 +37,7 @@ class Progress extends Component {
           <Text>Workouts Completed: {this.state.info.completed}</Text>
         </CardSection>
         <CardSection>
-          <Text>Current Weight: {this.state.info.weight}</Text>
+          <Text>Current Weight: {this.state.weight}</Text>
         </CardSection>
         <CardSection>
           <Text>Days left in current workout: {this.state.info.daysLeft}</Text>

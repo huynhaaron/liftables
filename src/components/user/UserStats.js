@@ -8,6 +8,7 @@ import Tabs from 'react-native-tabs';
 
 class UserStats extends Component {
   state = {userId: '',
+           mWeight: '100',
            mBench: '100',
            mCurls: '100',
            mDeadlift: '100',
@@ -32,7 +33,8 @@ class UserStats extends Component {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().mBench,
+        that.setState({mWeight: snapshot.val().mWeight,
+          mBench: snapshot.val().mBench,
         mCurls: snapshot.val().mCurls,
         mDeadlift: snapshot.val().mDeadlift,
         mSquat: snapshot.val().mSquat,
@@ -52,18 +54,19 @@ class UserStats extends Component {
   }
 
   handleSubmit() {
-    const {userId, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
+    const {userId, mWeight, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
     firebase.database().ref('users/' + userId).update({
       stats: {
-      mBench: mBench,
+      mWeight,
+      mBench,
       mCurls,
-      mDeadlift: mDeadlift,
-      mSquat: mSquat,
-      mOHP: mOHP,
-      mRow: mRow,
-      mPress: mPress,
-      mPowerclean: mPowerclean,
-      mChinup: mChinup}
+      mDeadlift,
+      mSquat,
+      mOHP,
+      mRow,
+      mPress,
+      mPowerclean,
+      mChinup}
     })
   }
 
@@ -83,6 +86,14 @@ class UserStats extends Component {
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Card>
           <Header headerText="Your Max Lifts"/>
+          <CardSection>
+            <Input
+              label="Weight"
+              placeholder="Your Weight in lb."
+              value={this.state.mWeight}
+              onChangeText={mWeight => this.setState({mWeight})}
+            />
+          </CardSection>
           <CardSection>
             <Input
               label="Max Bench"

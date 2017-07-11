@@ -228,28 +228,36 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		B510A42F1F15457E003FDBE4 /* PBXContainerItemProxy */ = {
+
+		B510A45F1F154EE3003FDBE4 /* PBXContainerItemProxy */ = {
+
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
 			remoteInfo = "third-party";
 		};
-		B510A4311F15457E003FDBE4 /* PBXContainerItemProxy */ = {
+
+		B510A4611F154EE3003FDBE4 /* PBXContainerItemProxy */ = {
+
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
 			remoteInfo = "third-party-tvOS";
 		};
-		B510A4331F15457E003FDBE4 /* PBXContainerItemProxy */ = {
+
+		B510A4631F154EE3003FDBE4 /* PBXContainerItemProxy */ = {
+
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
 			remoteInfo = "double-conversion";
 		};
-		B510A4351F15457E003FDBE4 /* PBXContainerItemProxy */ = {
+
+		B510A4651F154EE4003FDBE4 /* PBXContainerItemProxy */ = {
+
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
@@ -439,10 +447,12 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				B510A4301F15457E003FDBE4 /* libthird-party.a */,
-				B510A4321F15457E003FDBE4 /* libthird-party.a */,
-				B510A4341F15457E003FDBE4 /* libdouble-conversion.a */,
-				B510A4361F15457E003FDBE4 /* libdouble-conversion.a */,
+
+				B510A4601F154EE3003FDBE4 /* libthird-party.a */,
+				B510A4621F154EE3003FDBE4 /* libthird-party.a */,
+				B510A4641F154EE3003FDBE4 /* libdouble-conversion.a */,
+				B510A4661F154EE4003FDBE4 /* libdouble-conversion.a */,
+
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -601,6 +611,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 2VLAFN6V53;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -860,32 +871,33 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B510A4301F15457E003FDBE4 /* libthird-party.a */ = {
+		B510A4601F154EE3003FDBE4 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = B510A42F1F15457E003FDBE4 /* PBXContainerItemProxy */;
+			remoteRef = B510A45F1F154EE3003FDBE4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B510A4321F15457E003FDBE4 /* libthird-party.a */ = {
+		B510A4621F154EE3003FDBE4 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = B510A4311F15457E003FDBE4 /* PBXContainerItemProxy */;
+			remoteRef = B510A4611F154EE3003FDBE4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B510A4341F15457E003FDBE4 /* libdouble-conversion.a */ = {
+		B510A4641F154EE3003FDBE4 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = B510A4331F15457E003FDBE4 /* PBXContainerItemProxy */;
+			remoteRef = B510A4631F154EE3003FDBE4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B510A4361F15457E003FDBE4 /* libdouble-conversion.a */ = {
+		B510A4661F154EE4003FDBE4 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = B510A4351F15457E003FDBE4 /* PBXContainerItemProxy */;
+			remoteRef = B510A4651F154EE4003FDBE4 /* PBXContainerItemProxy */;
+
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1022,6 +1034,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2VLAFN6V53;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1043,6 +1056,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 2VLAFN6V53;
 				INFOPLIST_FILE = liftablesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1222,7 +1236,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1257,7 +1271,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -23,6 +23,10 @@ class Progress extends Component {
     });
     let weight = firebase.database().ref('users/' + currentUser + '/stats')
     weight.once('value', function(snapshot){
+      if (snapshot.val() === null){
+        that.setState({weight: '', loading: false});
+        return true;
+      }
       that.setState({ weight: snapshot.val().mWeight, loading: false});
     });
   }

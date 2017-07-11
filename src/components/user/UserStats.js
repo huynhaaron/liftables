@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
 import { Actions } from 'react-native-router-flux';
@@ -84,6 +84,7 @@ class UserStats extends Component {
 
     return (
       <View style={{flex: 1, justifyContent: 'center'}}>
+       <ScrollView style={{flex: 1, paddingVertical: 60}}>
         <Card>
           <Header headerText="Your Max Lifts"/>
           <CardSection>
@@ -185,14 +186,18 @@ class UserStats extends Component {
             </Button>
           </CardSection>
         </Card>
+      <View style={styles.blankStyle} />
+
+     </ScrollView>
+
         <Tabs selected={this.state.page}
           style={{backgroundColor:'white', position: 'absolute', bottom: 0}}
           selectedStyle={{color:'red'}}
           selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}
           onSelect={el=>this.setState({page:el.props.name})}>
-          <Text name="first" onPress={Actions.main} >Main</Text>
+          <Text name="first" onPress={Actions.about} >About</Text>
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
-          <Text name="programs" onPress={Actions.programs} > Programs</Text>
+          <Text name="programs" onPress={Actions.programs} >Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
           <Text name="progress" onPress={Actions.progress} >Progress</Text>
 
@@ -200,6 +205,12 @@ class UserStats extends Component {
       </View>
 
     );
+  }
+}
+
+const styles = {
+  blankStyle: {
+    height: 120
   }
 }
 

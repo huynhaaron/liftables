@@ -57,7 +57,8 @@ class LoginForm extends React.Component {
 
   renderButton() {
     if (this.state.loading) {
-      return <Spinner />;
+      return
+        <Spinner />;
     }
     return (
       <Text style={styles.errorTextStyle}>
@@ -84,6 +85,11 @@ class LoginForm extends React.Component {
           style={styles.imageStyle}
           resizeMode='cover'
         />
+
+        <View style={{position: 'absolute', bottom: 200, left: 100}}>
+          {this.renderButton()}
+        </View>
+
         <CardSection>
           <Input
             label="Email"
@@ -104,8 +110,6 @@ class LoginForm extends React.Component {
         </CardSection>
 
 
-        {this.renderButton()}
-
         <LoginCardSection>
           <LoginButton onPress={this.onButtonPress.bind(this)}>
             Log in
@@ -125,7 +129,7 @@ const styles = {
   errorTextStyle: {
     fontSize: 20,
     alignSelf: 'center',
-    color: 'red'
+    color: 'white'
   },
   imageStyle: {
     flex: 1,

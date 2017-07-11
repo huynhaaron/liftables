@@ -91,6 +91,7 @@ class ProgramShow extends React.Component {
         let multiplier = Number(that.state[specificWorkoutKey]);
         for (var i = 0; i < sets.length; i++) {
           let workoutDescription;
+
           if (specificWorkoutKey === 'mChinup') {
 
             let numReps = Math.ceil(multiplier * .01 * percent[i]);
@@ -98,6 +99,11 @@ class ProgramShow extends React.Component {
           }
           else if (sets[i] === "AMRAP"){
             workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false};
+
+          }
+          // makes it just the reps if the workout is not in the user stats ie "barbell shrug"
+          else if (isNaN(multiplier)) {
+            workoutDescription = {[`${sets[i]} reps`]: false}
           }
           else {
             let weight = Math.floor(multiplier * .01 * percent[i]);
@@ -171,14 +177,11 @@ class ProgramShow extends React.Component {
   render() {
     return (
       <ScrollView style={{flex: 1, paddingVertical: 65, flexDirection: 'column' }}>
-        <Text>
-          {moment().format('MMMM Do YYYY, h:mm:ss a')}
-        </Text>
-          <Text style={styles.titleStyle}>{this.props.name}</Text>
-          <Text style={styles.descriptionStyle}> {this.state.info.p1}</Text>
-          <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
-          <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
-          {this.grabInfo()}
+        <Text style={styles.titleStyle}>{this.props.name}</Text>
+        <Text style={styles.descriptionStyle}> {this.state.info.p1}</Text>
+        <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
+        <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
+        {this.grabInfo()}
       </ScrollView>
     );
   }

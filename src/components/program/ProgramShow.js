@@ -45,20 +45,20 @@ class ProgramShow extends React.Component {
     //get user stats
     let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
-    let stats = firebase.database().ref('users/' + userId);
+    let stats = firebase.database().ref('users/' + userId + '/stats');
     stats.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench,
-          mCurls: snapshot.val().stats.mCurls,
-        mDeadlift: snapshot.val().stats.mDeadlift,
-        mSquat: snapshot.val().stats.mSquat,
-        mOHP: snapshot.val().stats.mOHP,
-        mRow: snapshot.val().stats.mRow,
-        mPowerclean: snapshot.val().stats.mPowerclean,
-        mPress: snapshot.val().stats.mPress,
-        mChinup: snapshot.val().stats.mChinup});
+        that.setState({mBench: snapshot.val().mBench,
+          mCurls: snapshot.val().mCurls,
+        mDeadlift: snapshot.val().mDeadlift,
+        mSquat: snapshot.val().mSquat,
+        mOHP: snapshot.val().mOHP,
+        mRow: snapshot.val().mRow,
+        mPowerclean: snapshot.val().mPowerclean,
+        mPress: snapshot.val().mPress,
+        mChinup: snapshot.val().mChinup});
       }
     });
   }
@@ -94,19 +94,20 @@ class ProgramShow extends React.Component {
 
           if (specificWorkoutKey === 'mChinup') {
 
-            let numReps = Math.ceil(multiplier * .01 * percent[i])
-            workoutDescription = {[`${numReps} reps`]: false}
+            let numReps = Math.ceil(multiplier * .01 * percent[i]);
+            workoutDescription = {[`${numReps} reps`]: false};
           }
-          else if (sets[i] === "AMRAP") {
-            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false}
+          else if (sets[i] === "AMRAP"){
+            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false};
+
           }
           // makes it just the reps if the workout is not in the user stats ie "barbell shrug"
           else if (isNaN(multiplier)) {
             workoutDescription = {[`${sets[i]} reps`]: false}
           }
           else {
-            let weight = Math.floor(multiplier * .01 * percent[i])
-            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false}
+            let weight = Math.floor(multiplier * .01 * percent[i]);
+            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false};
           }
           setsDescription.push(workoutDescription);
         }
@@ -116,14 +117,28 @@ class ProgramShow extends React.Component {
     let calendar = firebase.database().ref('users/' + userId + '/calendars');
     calendar.once('value', function(snapshot) {
       if (snapshot.val() === null) {
-        // console.log("nothing in the calendar")
-        // console.log("writing workout to the database...")
-        firebase.database().ref('users/' + userId + '/calendars').set({
-          schedule
+        let stats = firebase.database().ref('users/' + userId + '/stats')
+        stats.once('value', function(statsSnapshot){
+          if(statsSnapshot.val() === null){
+            Alert.alert(
+                  'ERROR',
+                  'You must fill in your personal stats!',
+                  [
+                    {text: 'OK, take me to stats page', onPress: () => {
+                      Actions.userstats();
+                    }}
+                  ],
+                  { cancelable: true }
+            );
+          } else {
+            firebase.database().ref('users/' + userId + '/calendars').set({
+              schedule,
+              complete: false
+            });
+            Actions.calendar();
+          }
         });
-        Actions.calendar();
       } else {
-        // console.log("something in the calendar")
         Alert.alert(
               'ERROR',
               'You already have a workout in progress',
@@ -132,7 +147,9 @@ class ProgramShow extends React.Component {
                 {text: 'I understand, start new workout', onPress: () => {
                                               firebase.database().ref('users/' + userId + '/calendars').remove();
                                               firebase.database().ref('users/' + userId + '/calendars').set({
-                                                schedule
+                                                schedule,
+                                                complete: false
+
                                               });
                                               Actions.calendar();
                                             }}

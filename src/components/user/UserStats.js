@@ -8,6 +8,7 @@ import Tabs from 'react-native-tabs';
 
 class UserStats extends Component {
   state = {userId: '',
+           mWeight: '100',
            mBench: '100',
            mCurls: '100',
            mDeadlift: '100',
@@ -27,20 +28,21 @@ class UserStats extends Component {
     let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
 
-    let info = firebase.database().ref('users/' + userId);
+    let info = firebase.database().ref('users/' + userId + `/stats`);
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench,
-        mCurls: snapshot.val().stats.mCurls,
-        mDeadlift: snapshot.val().stats.mDeadlift,
-        mSquat: snapshot.val().stats.mSquat,
-        mOHP: snapshot.val().stats.mOHP,
-        mPowerclean: snapshot.val().stats.mPowerclean,
-        mPress: snapshot.val().stats.mPress,
-        mChinup: snapshot.val().stats.mChinup,
-        mRow: snapshot.val().stats.mRow});
+        that.setState({mWeight: snapshot.val().mWeight,
+          mBench: snapshot.val().mBench,
+        mCurls: snapshot.val().mCurls,
+        mDeadlift: snapshot.val().mDeadlift,
+        mSquat: snapshot.val().mSquat,
+        mOHP: snapshot.val().mOHP,
+        mPowerclean: snapshot.val().mPowerclean,
+        mPress: snapshot.val().mPress,
+        mChinup: snapshot.val().mChinup,
+        mRow: snapshot.val().mRow});
       }
     })
   }
@@ -52,18 +54,19 @@ class UserStats extends Component {
   }
 
   handleSubmit() {
-    const {userId, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
-    firebase.database().ref('users/' + userId).set({
+    const {userId, mWeight, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
+    firebase.database().ref('users/' + userId).update({
       stats: {
-      mBench: mBench,
+      mWeight,
+      mBench,
       mCurls,
-      mDeadlift: mDeadlift,
-      mSquat: mSquat,
-      mOHP: mOHP,
-      mRow: mRow,
-      mPress: mPress,
-      mPowerclean: mPowerclean,
-      mChinup: mChinup}
+      mDeadlift,
+      mSquat,
+      mOHP,
+      mRow,
+      mPress,
+      mPowerclean,
+      mChinup}
     })
   }
 
@@ -80,105 +83,113 @@ class UserStats extends Component {
     }
 
     return (
-      <View style={{flex: 1}}>
-        <ScrollView style={{flex: 1, paddingVertical: 60}}>
-          <Card>
-            <Header headerText="Your Max Lifts"/>
-            <CardSection>
-              <Input
-                label="Max Bench"
-                placeholder="Max Bench in lb."
-                value={this.state.mBench}
-                onChangeText={mBench => this.setState({mBench})}
-              />
-            </CardSection>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+       <ScrollView style={{flex: 1, paddingVertical: 60}}>
+        <Card>
+          <Header headerText="Your Max Lifts"/>
+          <CardSection>
+            <Input
+              label="Weight"
+              placeholder="Your Weight in lb."
+              value={this.state.mWeight}
+              onChangeText={mWeight => this.setState({mWeight})}
+            />
+          </CardSection>
+          <CardSection>
+            <Input
+              label="Max Bench"
+              placeholder="Max Bench in lb."
+              value={this.state.mBench}
+              onChangeText={mBench => this.setState({mBench})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Curl"
-                placeholder="Max Curl in lb."
-                value={this.state.mCurls}
-                onChangeText={mCurls => this.setState({mCurls})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Curl"
+              placeholder="Max Curl in lb."
+              value={this.state.mCurls}
+              onChangeText={mCurls => this.setState({mCurls})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Deadlift"
-                placeholder="Max Deadlift in lb."
-                value={this.state.mDeadlift}
-                onChangeText={mDeadlift => this.setState({mDeadlift})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Deadlift"
+              placeholder="Max Deadlift in lb."
+              value={this.state.mDeadlift}
+              onChangeText={mDeadlift => this.setState({mDeadlift})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Squat"
-                placeholder="Max Squat in lb."
-                value={this.state.mSquat}
-                onChangeText={mSquat => this.setState({mSquat})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Squat"
+              placeholder="Max Squat in lb."
+              value={this.state.mSquat}
+              onChangeText={mSquat => this.setState({mSquat})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max OHP"
-                placeholder="Max Overhead Press in lb."
-                value={this.state.mOHP}
-                onChangeText={mOHP => this.setState({mOHP})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max OHP"
+              placeholder="Max Overhead Press in lb."
+              value={this.state.mOHP}
+              onChangeText={mOHP => this.setState({mOHP})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Row"
-                placeholder="Max Row in lb."
-                value={this.state.mRow}
-                onChangeText={mRow => this.setState({mRow})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Row"
+              placeholder="Max Row in lb."
+              value={this.state.mRow}
+              onChangeText={mRow => this.setState({mRow})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Press"
-                placeholder="Max Press in lb."
-                value={this.state.mPress}
-                onChangeText={mPress => this.setState({mPress})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Press"
+              placeholder="Max Press in lb."
+              value={this.state.mPress}
+              onChangeText={mPress => this.setState({mPress})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Chinup"
-                placeholder="Max Chinup in reps"
-                value={this.state.mChinup}
-                onChangeText={mChinup => this.setState({mChinup})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Chinup"
+              placeholder="Max Chinup in reps"
+              value={this.state.mChinup}
+              onChangeText={mChinup => this.setState({mChinup})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Input
-                label="Max Powerclean"
-                placeholder="Max Powerclean in lb."
-                value={this.state.mPowerclean}
-                onChangeText={mPowerclean => this.setState({mPowerclean})}
-              />
-            </CardSection>
+          <CardSection>
+            <Input
+              label="Max Powerclean"
+              placeholder="Max Powerclean in lb."
+              value={this.state.mPowerclean}
+              onChangeText={mPowerclean => this.setState({mPowerclean})}
+            />
+          </CardSection>
 
-            <CardSection>
-              <Button onPress={this.handleSubmit.bind(this)}>
-                Save Lifts
-              </Button>
+          <CardSection>
+            <Button onPress={this.handleSubmit.bind(this)}>
+              Save Lifts
+            </Button>
 
-              <Button onPress={this.handleDelete.bind(this)}>
-                Delete Workout
-              </Button>
-            </CardSection>
-          </Card>
+            <Button onPress={this.handleDelete.bind(this)}>
+              Delete Workout
+            </Button>
+          </CardSection>
+        </Card>
+      <View style={styles.blankStyle} />
 
-          <View style={styles.blankStyle} />
+     </ScrollView>
 
-        </ScrollView>
         <Tabs selected={this.state.page}
           style={{backgroundColor:'white', position: 'absolute', bottom: 0}}
           selectedStyle={{color:'red'}}
@@ -188,7 +199,8 @@ class UserStats extends Component {
           <Text name="stats" onPress={Actions.userstats} >Stats</Text>
           <Text name="programs" onPress={Actions.programs} >Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
-          <Text name="fifth">Settings</Text>
+          <Text name="progress" onPress={Actions.progress} >Progress</Text>
+
         </Tabs>
       </View>
 

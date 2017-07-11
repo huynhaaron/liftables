@@ -21,6 +21,15 @@ class LoginForm extends React.Component {
       .catch(()=> {
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(()=>{
+            let userId = firebase.auth().currentUser.uid;
+            let date = this.todaysDate();
+            firebase.database().ref('users/' + userId + '/data').set({
+              completed: 0,
+              daysDone: 0,
+              daysLeft: 0,
+              userSince: `${date}`,
+              weight: 0
+            });
             Actions.root();
             this.onLoginSuccess();
           })
@@ -56,6 +65,15 @@ class LoginForm extends React.Component {
         {this.state.error}
       </Text>
     )
+  }
+
+  todaysDate(){
+
+    let today = new Date();
+    let month = today.getMonth()+1;
+    let day = today.getDate();
+    let year = today.getYear() + 1900;
+    return `${month} ${day} ${year}`
   }
 
 

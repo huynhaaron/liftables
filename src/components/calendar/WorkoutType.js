@@ -31,7 +31,7 @@ class WorkoutType extends Component {
   renderListItem(rowData, index){
     let exerciseDescription = Object.keys(rowData)[0];
     let checked = rowData[exerciseDescription];
-
+    
     return (
         <ToDoListItem
           label={rowData}

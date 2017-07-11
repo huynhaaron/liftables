@@ -13,6 +13,7 @@ import LoginForm from './components/LoginForm';
 import ProgramDetail from './components/program/ProgramDetail';
 import ProgramShow from './components/program/ProgramShow';
 import MyCalendar from './components/calendar/MyCalendar';
+import Progress from './components/progress/Progress';
 
 class App extends Component {
   state = { loggedIn: null };
@@ -55,6 +56,7 @@ class App extends Component {
           <Scene key="programs" component={ProgramIndex} title="Programs"/>
           <Scene key="programshow" component={ProgramShow} title="Program"/>
           <Scene key="calendar" component={MyCalendar} title="Calendar" />
+          <Scene key="progress" component={Progress} title="Progress" />
         </Scene>
       </Router>
     )

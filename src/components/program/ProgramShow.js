@@ -45,20 +45,20 @@ class ProgramShow extends React.Component {
     //get user stats
     let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
-    let stats = firebase.database().ref('users/' + userId);
+    let stats = firebase.database().ref('users/' + userId + '/stats');
     stats.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench,
-          mCurls: snapshot.val().stats.mCurls,
-        mDeadlift: snapshot.val().stats.mDeadlift,
-        mSquat: snapshot.val().stats.mSquat,
-        mOHP: snapshot.val().stats.mOHP,
-        mRow: snapshot.val().stats.mRow,
-        mPowerclean: snapshot.val().stats.mPowerclean,
-        mPress: snapshot.val().stats.mPress,
-        mChinup: snapshot.val().stats.mChinup});
+        that.setState({mBench: snapshot.val().mBench,
+          mCurls: snapshot.val().mCurls,
+        mDeadlift: snapshot.val().mDeadlift,
+        mSquat: snapshot.val().mSquat,
+        mOHP: snapshot.val().mOHP,
+        mRow: snapshot.val().mRow,
+        mPowerclean: snapshot.val().mPowerclean,
+        mPress: snapshot.val().mPress,
+        mChinup: snapshot.val().mChinup});
       }
     });
   }
@@ -111,11 +111,27 @@ class ProgramShow extends React.Component {
     let calendar = firebase.database().ref('users/' + userId + '/calendars');
     calendar.once('value', function(snapshot) {
       if (snapshot.val() === null) {
-        firebase.database().ref('users/' + userId + '/calendars').set({
-          schedule,
-          complete: false
+        let stats = firebase.database().ref('users/' + userId + '/stats')
+        stats.once('value', function(statsSnapshot){
+          if(statsSnapshot.val() === null){
+            Alert.alert(
+                  'ERROR',
+                  'You must fill in your personal stats!',
+                  [
+                    {text: 'OK, take me to stats page', onPress: () => {
+                      Actions.userstats();
+                    }}
+                  ],
+                  { cancelable: true }
+            );
+          } else {
+            firebase.database().ref('users/' + userId + '/calendars').set({
+              schedule,
+              complete: false
+            });
+            Actions.calendar();
+          }
         });
-        Actions.calendar();
       } else {
         Alert.alert(
               'ERROR',
@@ -127,6 +143,7 @@ class ProgramShow extends React.Component {
                                               firebase.database().ref('users/' + userId + '/calendars').set({
                                                 schedule,
                                                 complete: false
+
                                               });
                                               Actions.calendar();
                                             }}

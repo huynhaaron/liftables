@@ -24,6 +24,9 @@ export default class MyCalendar extends Component {
     let that = this;
     let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
     info.once('value', function(snapshot) {
+      if(snapshot.val()===null){
+        return true;
+      }
         that.setState({ calendar: Object.keys(snapshot.val())}, ()=>{
             that.setColor();  //first you set the calendar days, then you set the color of the days.
           });
@@ -43,7 +46,7 @@ export default class MyCalendar extends Component {
     completed.once("value", (snapshot)=>{
       let boolean = snapshot.val();
       if(!boolean){
-        if(this.state.completed.length === this.state.calendar.length){
+        if(this.state.completed.length === this.state.calendar.length && this.state.calendar.length > 0){
           firebase.database().ref('users/' + this.userId + '/data/completed').once('value', snapshot2=>{
             numCompleted = snapshot2.val();
             numCompleted += 1;
@@ -134,10 +137,14 @@ export default class MyCalendar extends Component {
     let dateKey = `${year}-${this.formatDate(month)}-${this.formatDate(day)}`;
 
     let that = this;
-    let info = firebase.database().ref('users/' + this.userId + '/calendars');
+    let info = firebase.database().ref('users/' + this.userId + '/calendars/schedule');
 
     info.once('value', function(snapshot) {
-        that.setState({workout: snapshot.val()["schedule"][dateKey], date: dateKey});
+      if(snapshot.val()===null){
+        that.setState({date: dateKey});
+        return true;
+      }
+        that.setState({workout: snapshot.val()[dateKey], date: dateKey});
     });
   }
 

@@ -27,20 +27,20 @@ class UserStats extends Component {
     let userId = firebase.auth().currentUser.uid;
     that.setState({userId});
 
-    let info = firebase.database().ref('users/' + userId);
+    let info = firebase.database().ref('users/' + userId + `/stats`);
     info.once('value', function(snapshot) {
       if (snapshot.val() === null) {
         return true;
       } else {
-        that.setState({mBench: snapshot.val().stats.mBench,
-        mCurls: snapshot.val().stats.mCurls,
-        mDeadlift: snapshot.val().stats.mDeadlift,
-        mSquat: snapshot.val().stats.mSquat,
-        mOHP: snapshot.val().stats.mOHP,
-        mPowerclean: snapshot.val().stats.mPowerclean,
-        mPress: snapshot.val().stats.mPress,
-        mChinup: snapshot.val().stats.mChinup,
-        mRow: snapshot.val().stats.mRow});
+        that.setState({mBench: snapshot.val().mBench,
+        mCurls: snapshot.val().mCurls,
+        mDeadlift: snapshot.val().mDeadlift,
+        mSquat: snapshot.val().mSquat,
+        mOHP: snapshot.val().mOHP,
+        mPowerclean: snapshot.val().mPowerclean,
+        mPress: snapshot.val().mPress,
+        mChinup: snapshot.val().mChinup,
+        mRow: snapshot.val().mRow});
       }
     })
   }
@@ -53,7 +53,7 @@ class UserStats extends Component {
 
   handleSubmit() {
     const {userId, mBench, mCurls, mDeadlift, mSquat, mOHP, mRow, mPowerclean, mPress, mChinup } = this.state;
-    firebase.database().ref('users/' + userId).set({
+    firebase.database().ref('users/' + userId).update({
       stats: {
       mBench: mBench,
       mCurls,
@@ -184,7 +184,7 @@ class UserStats extends Component {
           <Text name="programs" onPress={Actions.programs} > Programs</Text>
           <Text name="calendar" onPress={Actions.calendar} >Calendar</Text>
           <Text name="progress" onPress={Actions.progress} >Progress</Text>
-          
+
         </Tabs>
       </View>
 

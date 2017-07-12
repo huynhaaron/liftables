@@ -17,12 +17,18 @@ class About extends Component {
       <View style={styles.container}>
 
         <Text style={styles.headerStyle}>Liftables</Text>
+
         <Text style={styles.textStyle}>
           Liftables is an app that easily generates a workout plan for you. Start with the user stats page with your max lifts.
           Once you insert your stats, choose a workout plan and just click "Create Workout". It's as easy as that.
           Each day's workout will be in the Calendar tab where you can check off each task.
         </Text>
-        <Text>Made with ❤️ using React Native and Firebase</Text>
+        <Text style={styles.textStyle}>
+          <Text style={{fontWeight: "700"}}>Disclaimer:</Text> Liftables is not a personal trainer; it is solely meant to be used as a guide for workouts.
+          Liftables does not hold any responsibility for any injuries that may come from using this app.
+          Please consult a physician before attempting any type of exercise.
+        </Text>
+        <Text style={{marginTop: 30}}>Made with ❤️ using React Native and Firebase</Text>
         <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
           selectedStyle={{color:'red'}}
           selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}

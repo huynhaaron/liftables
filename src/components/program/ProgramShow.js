@@ -98,15 +98,16 @@ class ProgramShow extends React.Component {
             workoutDescription = {[`${numReps} reps`]: false};
           }
           else if (sets[i] === "AMRAP"){
-            workoutDescription = {[`As many reps as possible x ${multiplier * .01 * percent[i]} lbs`]: false};
+            let weight = that.round(multiplier * .01 * percent[i]);
+            workoutDescription = {[`As many reps as possible x ${weight} lbs`]: false};
 
           }
           // makes it just the reps if the workout is not in the user stats ie "barbell shrug"
           else if (isNaN(multiplier)) {
-            workoutDescription = {[`${sets[i]} reps`]: false}
+            workoutDescription = {[`${sets[i]} reps`]: false};
           }
           else {
-            let weight = Math.floor(multiplier * .01 * percent[i]);
+            let weight = that.round(multiplier * .01 * percent[i]);
             workoutDescription  = {[`${sets[i]} reps x ${weight} lbs`]: false};
           }
           setsDescription.push(workoutDescription);
@@ -117,7 +118,7 @@ class ProgramShow extends React.Component {
     let calendar = firebase.database().ref('users/' + userId + '/calendars');
     calendar.once('value', function(snapshot) {
       if (snapshot.val() === null) {
-        let stats = firebase.database().ref('users/' + userId + '/stats')
+        let stats = firebase.database().ref('users/' + userId + '/stats');
         stats.once('value', function(statsSnapshot){
           if(statsSnapshot.val() === null){
             Alert.alert(
@@ -172,6 +173,20 @@ class ProgramShow extends React.Component {
         Create workout plan
       </Button>);
     }
+  }
+
+  round(num){
+    let weight = num;
+    num %= 10;
+
+    if (num >= 5){
+      num %= 5;
+      weight = num >= 2.5 ? (weight + 5 - (weight % 5)) : (weight - (weight % 5));
+    } else {
+      num %=5;
+      weight = num >= 2.5 ? (weight = weight + 5 - (weight % 5)) : (weight - (weight % 5));
+    }
+    return weight;
   }
 
   render() {

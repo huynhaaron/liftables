@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
 
 class About extends Component {
-  state = {page: "first"};
+  state = {page: "about"};
 
   render(){
     return (
@@ -27,11 +27,11 @@ class About extends Component {
           selectedStyle={{color:'red'}}
           selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}
           onSelect={el=>this.setState({page:el.props.name})}>
-          <Text name="first" onPress={Actions.about}>About</Text>
+          <Text name="about" onPress={Actions.about}>About</Text>
           <Text name="stats" onPress={Actions.userstats}>Stats</Text>
-          <Text name="third" onPress={Actions.programs}>Programs</Text>
-          <Text name="fourth" onPress={Actions.calendar}>Calendar</Text>
-          <Text name="fifth" onPress={Actions.progress}>Progress</Text>
+          <Text name="programs" onPress={Actions.programs}>Programs</Text>
+          <Text name="calendar" onPress={Actions.calendar}>Calendar</Text>
+          <Text name="progress" onPress={Actions.progress}>Progress</Text>
 
         </Tabs>
       </View>

@@ -16,7 +16,7 @@ export default class ProgramIndex extends React.Component {
               <Image style={styles.imageStyle}  source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/barbell-bench-press.png'}}/>
               <View style={styles.textStyle}>
                 <Text style={styles.titleStyle} >Jim Wendler's 5-3-1</Text>
-                <Text style={styles.descriptionStyle} numberOfLines={6}>Essentially, Jim Wendler’s 5/3/1 Method is a simple, effective and flexible routine for getting stronger which you can employ indefinitely and tailor to individual goals. It is build around the central tenets of strength training: Compound lifts, constant progress, and smashing PRs. The 5/3/1 routine itself is built around a monthly mesocycle which comprises four distinct microcycles.</Text>
+                <Text style={styles.descriptionStyle} numberOfLines={8}>Essentially, Jim Wendler’s 5/3/1 Method is a simple, effective and flexible routine for getting stronger which you can employ indefinitely and tailor to individual goals. The 5/3/1 routine itself is built around a monthly mesocycle which comprises four distinct microcycles.</Text>
               </View>
             </TouchableOpacity>
 
@@ -24,7 +24,7 @@ export default class ProgramIndex extends React.Component {
               <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494959835/Liftables/dumbbell.png'}}/>
               <View style={styles.textStyle}>
                 <Text style={styles.titleStyle}>Starting Strength</Text>
-                <Text style={styles.descriptionStyle} numberOfLines={6}>The goal of this program is to add weight each and every time you lift, taking advantage of The Novice Effect that allows you to do so. Perform the program on a 3 day per week schedule, on non-consecutive days, i.e. Mon/Wed/Fri, Tues/Thurs/Sat or similar.</Text>
+                <Text style={styles.descriptionStyle} numberOfLines={7}>The goal of this program is to add weight each and every time you lift, taking advantage of The Novice Effect that allows you to do so. Perform the program on a 3 day per week schedule, on non-consecutive days</Text>
               </View>
             </TouchableOpacity>
 
@@ -32,7 +32,7 @@ export default class ProgramIndex extends React.Component {
             <Image style={styles.imageStyle} source={{uri: 'https://res.cloudinary.com/booklog/image/upload/v1494958059/Liftables/ice-cream.png'}}/>
             <View style={styles.textStyle}>
               <Text style={styles.titleStyle}>IceCream Fitness</Text>
-              <Text style={styles.descriptionStyle} numberOfLines={6}> The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
+              <Text style={styles.descriptionStyle} numberOfLines={6}>The program is called Ice Cream Fitness created by Jason Blaha and is commonly known as ICF5x5. It has a reputation for being a very tough and very high volume but very high reward workout</Text>
             </View>
           </TouchableOpacity>
 

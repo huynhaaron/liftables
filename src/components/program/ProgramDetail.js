@@ -35,12 +35,13 @@ export default class ProgramDetail extends React.Component {
 
 const styles = {
   titleStyle: {
-    fontSize: 18,
+    fontSize: 8,
     textAlignVertical: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    backgroundColor: 'green'
   },
   descriptionStyle: {
     fontSize: 12,
     textAlignVertical: 'center',
   }
-}
+};

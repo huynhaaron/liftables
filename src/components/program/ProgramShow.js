@@ -176,28 +176,42 @@ class ProgramShow extends React.Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1, paddingVertical: 65, flexDirection: 'column' }}>
-        <Text style={styles.titleStyle}>{this.props.name}</Text>
-        <Text style={styles.descriptionStyle}> {this.state.info.p1}</Text>
-        <Text style={styles.descriptionStyle}> {this.state.info.p2}</Text>
-        <Text style={styles.descriptionStyle}> {this.state.info.p3}</Text>
-        {this.grabInfo()}
+      <ScrollView style={{flex: 1, paddingVertical: 65, flexDirection: 'column'}}>
+
+          <Text style={styles.titleStyle} numberOfLines={1}>{this.props.name}</Text>
+          <Text style={styles.descriptionStyle}>{this.state.info.p1}</Text>
+          <Text style={styles.descriptionStyle}>{this.state.info.p2}</Text>
+          <Text style={styles.descriptionStyle}>{this.state.info.p3}</Text>
+          <View style={styles.buttonStyle}>
+            {this.grabInfo()}
+          </View>
+          <View style={styles.blankStyle} />
       </ScrollView>
     );
   }
 }
 
 const styles = {
-  titleStyle: {
-    fontSize: 50,
-    textAlign: 'right',
-    fontWeight: 'bold'
+  blankStyle: {
+    height: 120
+  },
+  buttonStyle: {
+    flex: 1,
+    margin: 20
   },
   descriptionStyle: {
-    fontSize: 12,
-    textAlignVertical: 'center',
-    margin: 10
+    fontSize: 14,
+    textAlign: 'justify',
+    marginLeft: 25,
+    marginRight: 25,
+    marginBottom: 20,
+  },
+  titleStyle: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginVertical: 20
   }
-}
+};
 //
 export default ProgramShow;

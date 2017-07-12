@@ -111,6 +111,7 @@ class LoginForm extends React.Component {
 
 
         <LoginCardSection>
+
           <LoginButton onPress={this.onButtonPress.bind(this)}>
             Log in
           </LoginButton>

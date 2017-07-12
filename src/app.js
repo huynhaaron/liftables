@@ -10,7 +10,6 @@ import About from './components/About';
 import UserStats from './components/user/UserStats';
 import ProgramIndex from './components/program/ProgramIndex';
 import LoginForm from './components/LoginForm';
-import ProgramDetail from './components/program/ProgramDetail';
 import ProgramShow from './components/program/ProgramShow';
 import MyCalendar from './components/calendar/MyCalendar';
 import Progress from './components/progress/Progress';

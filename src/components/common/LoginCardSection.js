@@ -12,6 +12,7 @@ const LoginCardSection = (props) => {
 const styles = {
   containerStyle: {
     padding: 5,
+    paddingTop: 25,
     justifyContent: 'flex-start',
     flexDirection: 'row',
     borderColor: '#ddd',

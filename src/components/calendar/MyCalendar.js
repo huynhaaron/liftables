@@ -163,10 +163,12 @@ export default class MyCalendar extends Component {
       //if day is completed, setState is called here
       //to change the color, then the callback is called to see
       //if the entire workout is completed.
-      that.setState({completed: completedDates}, ()=>{
-        that.daysTracker();  //updates progress tab
-        that.completedWorkout();
-      });
+      if(that.refs.calendarRef){
+        that.setState({completed: completedDates}, ()=>{
+          that.daysTracker();  //updates progress tab
+          that.completedWorkout();
+        });
+      }
     });
   }
 
@@ -182,7 +184,7 @@ export default class MyCalendar extends Component {
     let markedDate = this.renderColor();
 
     return (
-      <View style={styles.containerStyle}>
+      <View ref={"calendarRef"} style={styles.containerStyle}>
         <ScrollView style={{flex: 1}}>
           <Calendar style={styles.calendarStyle}
             markedDates = { markedDate }

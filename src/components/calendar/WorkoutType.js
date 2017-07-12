@@ -31,7 +31,7 @@ class WorkoutType extends Component {
   renderListItem(rowData, index){
     let exerciseDescription = Object.keys(rowData)[0];
     let checked = rowData[exerciseDescription];
-    
+
     return (
         <ToDoListItem
           label={rowData}
@@ -44,8 +44,8 @@ class WorkoutType extends Component {
 
   render(){
     return (
-      <View>
-        <Text>Exercise: {this.props.type}</Text>
+      <View style={{marginTop:15}}>
+        <Text style={styles.titleStyle}>Exercise: {this.props.type}</Text>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={(rowData, sectionID, rowIndex)=>this.renderListItem(rowData, rowIndex)}
@@ -57,6 +57,11 @@ class WorkoutType extends Component {
 const styles = {
   buttonStyle: {
     height: 20,
+  },
+  titleStyle: {
+    marginBottom: 8,
+    fontWeight: '500',
+    fontSize: 16
   }
 
 };

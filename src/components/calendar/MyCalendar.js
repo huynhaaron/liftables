@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, ScrollView } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import ToDoList from './ToDoList';
 import firebase from 'firebase';
@@ -183,12 +183,14 @@ export default class MyCalendar extends Component {
 
     return (
       <View style={styles.containerStyle}>
-        <Calendar style={styles.calendarStyle}
-          markedDates = { markedDate }
-          markingType = {'interactive'}
-          selected = {[this.state.date, Date()]}
-          onDayPress={(day)=> this.renderWorkout(day)}
-          />
+        <ScrollView style={{flex: 1}}>
+          <Calendar style={styles.calendarStyle}
+            markedDates = { markedDate }
+            markingType = {'interactive'}
+            selected = {[this.state.date, Date()]}
+            onDayPress={(day)=> this.renderWorkout(day)}
+            />
+        </ScrollView>
         <ToDoList plan={this.state.workout} date={this.state.date}/>
         <Tabs selected={this.state.page}
           style={{backgroundColor:'white', position: 'absolute', bottom: 0}}

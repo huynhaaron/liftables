@@ -107,7 +107,7 @@ class ProgramShow extends React.Component {
           }
           else {
             let weight = Math.floor(multiplier * .01 * percent[i]);
-            workoutDescription  = {[`${sets[i]} reps x ${weight}`]: false};
+            workoutDescription  = {[`${sets[i]} reps x ${weight} lbs`]: false};
           }
           setsDescription.push(workoutDescription);
         }

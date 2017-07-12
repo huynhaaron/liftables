@@ -62,5 +62,5 @@ class App extends Component {
   }
 }
 
-
+console.ignoredYellowBox = ['Remote debugger']; //for debugging purposes
 export default App;

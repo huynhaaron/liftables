@@ -9,9 +9,8 @@ Liftables is a React Native application that uses Firebase as its backend. Users
 Developed by Aaron Huynh, Hyun Kim, and Brian Tsai
 
 <!-- ![image of Sample Schedule](/docs/photos/homepage.png) -->
-<img src="/docs/photos/homepage.png" alt="homepage" style="width: 200px;"/>
-&nbsp; &nbsp; &nbsp;
-<img src="/docs/photos/workouts.png" alt="workouts" style="width: 200px;"/>
+<img src="/docs/photos/homepage.png" alt="homepage" width: 100px/>
+<img src="/docs/photos/workouts.png" alt="workouts" width: 100px/>
 
 ## Firebase Auth and Users
 

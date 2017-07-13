@@ -9,8 +9,8 @@ Liftables is a React Native application that uses Firebase as its backend. Users
 Developed by Aaron Huynh, Hyun Kim, and Brian Tsai
 
 <!-- ![image of Sample Schedule](/docs/photos/homepage.png) -->
-<img src="/docs/photos/homepage.png" alt="homepage" width: 100px/>
-<img src="/docs/photos/workouts.png" alt="workouts" width: 100px/>
+<img src="/docs/photos/homepage.png" alt="homepage" width="100"/>&nbsp;&nbsp;&nbsp;
+<img src="/docs/photos/workouts.png" alt="workouts" width="100"/>
 
 ## Firebase Auth and Users
 
@@ -52,13 +52,13 @@ an existing child:
 Every screen in React Native was divided into reusable components. Input, Spinner, Button, and Header are some of the common components seen in every screen, so component classes were created for those features. Below you can see Header, Input, and Button Components utilized in the Stats page.
 
 
-<img src="/docs/photos/components.png" alt="components" style="width: 200px;"/>
+<img src="/docs/photos/components.png" alt="components" width= "200"/>
 
 ## Calendar API
 
 A npm module was used for the Calendar API, downloaded as react-native-calendars.
 
-<img src="/docs/photos/calendar.png" alt="calendar" style="width: 200px;"/>
+<img src="/docs/photos/calendar.png" alt="calendar" width= "200"/>
 
 The Calendar API was simple to use: every time a date was clicked, a firebase read request was sent to the database,
 and setState was run to update the agenda for that date.

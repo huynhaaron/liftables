@@ -1,16 +1,12 @@
 # Liftables
 
-[Liftables live][l]
-[l]: https://musicianhub.herokuapp.com/#/
-
-
 Liftables is a React Native application that uses Firebase as its backend. Users can create customized workouts and follow a daily schedule that creates exercises based on the user's personal stats.
 
 Developed by Aaron Huynh, Hyun Kim, and Brian Tsai
 
 <!-- ![image of Sample Schedule](/docs/photos/homepage.png) -->
-<img src="/docs/photos/homepage.png" alt="homepage" width="300"/>&nbsp;&nbsp;&nbsp;
-<img src="/docs/photos/workouts.png" alt="workouts" width="300"/>
+<img src="/docs/photos/homepage.png" alt="homepage" width="250"/>&nbsp;&nbsp;&nbsp;
+<img src="/docs/photos/workouts.png" alt="workouts" width="250"/>
 
 ## Firebase Auth and Users
 
@@ -52,13 +48,13 @@ an existing child:
 Every screen in React Native was divided into reusable components. Input, Spinner, Button, and Header are some of the common components seen in every screen, so component classes were created for those features. Below you can see Header, Input, and Button Components utilized in the Stats page.
 
 
-<img src="/docs/photos/components.png" alt="components" width= "300"/>
+<img src="/docs/photos/components.png" alt="components" width= "250"/>
 
 ## Calendar API
 
 A npm module was used for the Calendar API, downloaded as react-native-calendars.
 
-<img src="/docs/photos/calendar.png" alt="calendar" width= "300"/>
+<img src="/docs/photos/calendar.png" alt="calendar" width= "250"/>
 
 The Calendar API was simple to use: every time a date was clicked, a firebase read request was sent to the database,
 and setState was run to update the agenda for that date.

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
 import firebase from 'firebase';
 import { Header, Input, CardSection, Card, Button, Spinner } from '../common';
 import { Actions } from 'react-native-router-flux';
 import Tabs from 'react-native-tabs';
+
 
 
 class UserStats extends Component {
@@ -67,7 +68,15 @@ class UserStats extends Component {
       mPress,
       mPowerclean,
       mChinup}
+    }).then(()=>{
+      Alert.alert(
+            'Success',
+            'Successfully updated stats' 
+      );
+
     })
+
+
   }
 
   handleDelete() {

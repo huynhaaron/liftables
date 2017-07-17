@@ -1,5 +1,8 @@
 # Liftables
 
+[Live Link: Liftables][l]
+[l]: https://play.google.com/store/apps/details?id=com.liftables
+
 Liftables is a React Native application that uses Firebase as its backend. Users can create customized workouts and follow a daily schedule that creates exercises based on the user's personal stats.
 
 Developed by Aaron Huynh, Hyun Kim, and Brian Tsai
